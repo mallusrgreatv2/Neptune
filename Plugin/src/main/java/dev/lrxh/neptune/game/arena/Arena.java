@@ -34,6 +34,7 @@ public class Arena implements IArena {
     private AtomicInteger duplicateIndex;
     private Arena owner;
     private boolean doneLoading;
+    private boolean used;
 
     private Long allocationId;
 
@@ -171,6 +172,11 @@ public class Arena implements IArena {
     }
 
     public void remove() {
+        if (SettingsLocale.ARENA_DUPLICATES.getBoolean()) {
+            used = false;
+            return;
+        }
+
         if (allocationId != null) {
             try {
                 SpatialAllocator.get().free(allocationId);
