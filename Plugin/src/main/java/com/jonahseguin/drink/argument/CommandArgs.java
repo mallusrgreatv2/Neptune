@@ -25,8 +25,8 @@ public class CommandArgs {
     private int index = 0;
 
     public CommandArgs(@Nonnull DrinkCommandService commandService, @Nonnull CommandSender sender,
-            @Nonnull String label, @Nonnull List<String> args,
-            @Nonnull Map<Character, CommandFlag> flags) {
+                       @Nonnull String label, @Nonnull List<String> args,
+                       @Nonnull Map<Character, CommandFlag> flags) {
         Preconditions.checkNotNull(commandService, "CommandService cannot be null");
         Preconditions.checkNotNull(sender, "CommandSender cannot be null");
         Preconditions.checkNotNull(label, "Label cannot be null");
@@ -72,24 +72,4 @@ public class CommandArgs {
     public Player getSenderAsPlayer() {
         return (Player) sender;
     }
-
-    public String nextString() {
-        lock.lock();
-        try {
-            if (index >= args.size()) {
-                return "";
-            }
-            // Combine all remaining arguments
-            StringBuilder sb = new StringBuilder();
-            while (index < args.size()) {
-                sb.append(args.get(index++));
-                if (index < args.size())
-                    sb.append(" ");
-            }
-            return sb.toString();
-        } finally {
-            lock.unlock();
-        }
-    }
-
 }

@@ -180,7 +180,8 @@ public class Arena implements IArena {
         if (allocationId != null) {
             try {
                 SpatialAllocator.get().free(allocationId);
-            } catch (Exception ignored) { }
+            } catch (Exception ignored) {
+            }
             allocationId = null;
         }
 

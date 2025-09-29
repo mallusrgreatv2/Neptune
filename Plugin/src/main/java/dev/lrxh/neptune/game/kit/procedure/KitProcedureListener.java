@@ -50,6 +50,11 @@ public class KitProcedureListener implements Listener {
                     return;
                 }
 
+                if (input.contains(" ")) {
+                    player.sendMessage(CC.error("Kit name cannot contain spaces"));
+                    return;
+                }
+
                 player.sendMessage(CC.success("Created kit"));
                 Bukkit.getScheduler().runTask(Neptune.get(), () -> {
                     PlayerUtil.reset(player);

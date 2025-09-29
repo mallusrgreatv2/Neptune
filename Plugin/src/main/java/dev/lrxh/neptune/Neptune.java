@@ -2,6 +2,7 @@ package dev.lrxh.neptune;
 
 import com.jonahseguin.drink.CommandService;
 import com.jonahseguin.drink.Drink;
+import com.jonahseguin.drink.annotation.Text;
 import com.jonahseguin.drink.provider.spigot.UUIDProvider;
 import dev.lrxh.api.NeptuneAPI;
 import dev.lrxh.api.NeptuneAPIImpl;
@@ -74,7 +75,6 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
-import com.jonahseguin.drink.annotation.Text;
 
 @Getter
 public final class Neptune extends JavaPlugin {
@@ -150,14 +150,14 @@ public final class Neptune extends JavaPlugin {
 
     private void registerListeners() {
         Arrays.asList(
-                new ProfileListener(),
-                new MatchListener(),
-                new GlobalListener(),
-                new ItemListener(),
-                new MenuListener(),
-                new ArenaProcedureListener(),
-                new KitProcedureListener(),
-                new ItemBrowserListener())
+                        new ProfileListener(),
+                        new MatchListener(),
+                        new GlobalListener(),
+                        new ItemListener(),
+                        new MenuListener(),
+                        new ArenaProcedureListener(),
+                        new KitProcedureListener(),
+                        new ItemBrowserListener())
                 .forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }
 

@@ -22,7 +22,7 @@ public class CommandArg {
     }
 
     public String get() {
-        return args.nextString();
+        return value;
     }
 
     public String getLabel() {

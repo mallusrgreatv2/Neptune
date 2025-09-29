@@ -7,7 +7,12 @@ import org.bukkit.OfflinePlayer;
 
 public class StatePlaceholder implements Placeholder {
     @Override
-    public boolean match(String string) { return string.equals("state"); };
+    public boolean match(String string) {
+        return string.equals("state");
+    }
+
+    ;
+
     @Override
     public String parse(OfflinePlayer player, String string) {
         Profile profile = API.getProfile(player);

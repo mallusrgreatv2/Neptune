@@ -12,6 +12,9 @@ public class SpatialAllocator {
     private final ConcurrentHashMap<Long, Allocation> allocations = new ConcurrentHashMap<>();
     private final AtomicLong idCounter = new AtomicLong(1);
 
+    private SpatialAllocator() {
+    }
+
     // helper to encode chunk coords into a single long key
     private static long keyFor(int cx, int cz) {
         return (((long) cx) << 32) ^ (cz & 0xffffffffL);
@@ -19,9 +22,6 @@ public class SpatialAllocator {
 
     public static SpatialAllocator get() {
         return INSTANCE;
-    }
-
-    private SpatialAllocator() {
     }
 
     /**

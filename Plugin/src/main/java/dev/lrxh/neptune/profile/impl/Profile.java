@@ -432,7 +432,8 @@ public class Profile implements IProfile {
                     if (value > max) {
                         max = value;
                     }
-                } catch (NumberFormatException ignore) {}
+                } catch (NumberFormatException ignore) {
+                }
             }
         }
         return max;
