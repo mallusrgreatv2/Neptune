@@ -17,7 +17,7 @@ public class PartySettingsMenu extends Menu {
     private final Party party;
 
     public PartySettingsMenu(Party party) {
-        super(MenusLocale.PARTY_SETTINGS_TITLE.getString(), MenusLocale.PARTY_SETTINGS_SIZE.getInt(), Filter.valueOf(MenusLocale.PARTY_SETTINGS_FILTER.getString()));
+        super(MenusLocale.PARTY_SETTINGS_TITLE.getString(), MenusLocale.PARTY_SETTINGS_SIZE.getInt(), Filter.valueOf(MenusLocale.PARTY_SETTINGS_FILTER.getString()), true);
         this.party = party;
         setUpdateEveryTick(true);
     }
