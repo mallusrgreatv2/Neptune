@@ -91,7 +91,7 @@ public class KitService extends IService implements IKitService {
     public void save() {
         getConfigFile().getConfiguration().getKeys(false).forEach(key -> getConfigFile().getConfiguration().set(key, null));
         kits.forEach(kit -> {
-            String path = "kits." + kit.getName() + ".";
+            String path = "kits." + kit.getName().replaceAll("\\s+", "") + ".";
             List<Value> values = new ArrayList<>();
 
             values.add(new Value("displayName", kit.getDisplayName()));
