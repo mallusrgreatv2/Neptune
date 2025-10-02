@@ -1,4 +1,10 @@
+<img width="2000" height="1000" alt="image(6)" src="https://github.com/user-attachments/assets/76ecdb11-ead6-4598-9d0c-4327503df5ec" />
+
+--- 
 # Placeholders
+> [!NOTE]
+> PLACEHOLDER API is required for placeholders you can download it from [SPIGOTMC](https://www.spigotmc.org/resources/placeholderapi.6245/)
+
 
 ## Globally Available
 
@@ -99,12 +105,32 @@
 
 |
 
+> [!IMPORTANT]
+> Requires FFA plugin [purchase here](https://builtbybit.com/resources/neptune-practice-ffa-addon.75089/)
+
 ## FFA Match
 
 | Plugin   | PlaceholderAPI  | Description                                                |
 | -------- | --------------- | ---------------------------------------------------------- |
 | \<alive> | %neptune_alive% | The number of players alive in the match                   |
 | \<max>   | %neptune_max%   | The total number of players that participated in the match |
+
+
+|
+
+## Leaderboards
+
+| PlaceholderAPI                                                       | Description                                                                            |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| %neptune_\<KILLS\|BEST_WIN_STREAK\|DEATHS\|ELO\>_\<kit name\>_\<1-10\>_name%  | Returns the player's name with the most kills/win streak/deaths/elo in the select kit. |
+| %neptune_\<KILLS\|BEST_WIN_STREAK\|DEATHS\|ELO\>_\<kit name\>_\<1-10\>_value% | Returns the kills/win streak/deaths/elo from the player on the selected kit.           |
+
+
+Example usage:
+- `%neptune_KILLS_Axe_1_name%` -> Lrxh_ (Return the player's name with the most wins in the kit Axe in slot 1)
+- `%neptune_KILLS_Axe_1_value%` -> 100 (Return the wins from the player in slot 1)
+
+##
 
 \* -> The placeholder is not needed since you can use other expansions.
 
