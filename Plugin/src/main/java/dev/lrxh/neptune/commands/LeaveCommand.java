@@ -27,15 +27,15 @@ public class LeaveCommand {
                 MessagesLocale.MATCH_FORFEIT.send(player);
                 return;
             case IN_CUSTOM:
+                PlayerUtil.reset(player);
                 profile.setState(ProfileState.IN_LOBBY);
                 PlayerUtil.teleportToSpawn(player.getUniqueId());
                 return;
             default:
                 break;
         }
-        PlayerUtil.teleportToSpawn(player.getUniqueId());
-        PlayerUtil.reset(player);
         PlayerLeaveEvent event = new PlayerLeaveEvent(profile, previousStatus);
         Bukkit.getPluginManager().callEvent(event);
+        PlayerUtil.teleportToSpawn(player.getUniqueId());
     }
 }
