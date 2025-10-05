@@ -106,12 +106,12 @@ public class Profile implements IProfile {
                                         ? kit.getItems()
                                         : ItemUtils.deserialize(kitDocument.getString("kit")));
 
-                        // DataDocument customPersistentData = kitDocument.getDataDocument("customPersistentData");
-                        // if (customPersistentData != null) {
-                        //     for (String key : customPersistentData.data.keySet()) {
-                        //         profileKitData.setPersistentData(key, customPersistentData.data.get(key));
-                        //     }
-                        // }
+                         DataDocument customPersistentData = kitDocument.getDataDocument("customPersistentData");
+                         if (customPersistentData != null) {
+                             for (String key : customPersistentData.data.keySet()) {
+                                 profileKitData.setPersistentData(key, customPersistentData.data.get(key));
+                             }
+                         }
 
                         profileKitData.updateDivision();
                     }

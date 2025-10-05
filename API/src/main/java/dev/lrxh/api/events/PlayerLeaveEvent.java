@@ -1,6 +1,5 @@
 package dev.lrxh.api.events;
 
-import dev.lrxh.api.match.IMatch;
 import dev.lrxh.api.profile.IProfile;
 import lombok.Getter;
 import org.bukkit.event.Event;
