@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -36,6 +38,19 @@ public class GlobalListener implements Listener {
         }
         event.setCancelled(true);
     }
+
+    @EventHandler
+    public void onCraftItem(CraftItemEvent event) {
+        if (event.getInventory().getType() == InventoryType.CRAFTING) {
+            if (!(event.getWhoClicked() instanceof Player player)) return;
+            if (player.getGameMode().equals(GameMode.CREATIVE)) return;
+            Profile profile = API.getProfile(player);
+            if (isPlayerNotInMatch(profile) && profile.getState() != ProfileState.IN_CUSTOM) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
 
     @EventHandler
     public void onShiftRightClick(PlayerInteractEntityEvent event) {
