@@ -36,7 +36,7 @@ public class QueueService implements IQueueService {
         if (get(playerUUID) != null) return;
 
         Profile profile = API.getProfile(playerUUID);
-        if (profile.hasState(ProfileState.IN_GAME)) return;
+        if (!profile.hasState(ProfileState.IN_LOBBY)) return;
         if (profile.getGameData().getParty() != null) return;
         if (queueEntry.getKit().is(KitRule.HIDDEN)) return;
 
