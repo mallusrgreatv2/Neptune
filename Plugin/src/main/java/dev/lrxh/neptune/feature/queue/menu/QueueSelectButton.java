@@ -1,12 +1,15 @@
 package dev.lrxh.neptune.feature.queue.menu;
 
+import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.configs.impl.MenusLocale;
+import dev.lrxh.neptune.configs.impl.SettingsLocale;
 import dev.lrxh.neptune.feature.leaderboard.LeaderboardService;
 import dev.lrxh.neptune.feature.leaderboard.impl.LeaderboardType;
 import dev.lrxh.neptune.feature.leaderboard.impl.PlayerEntry;
 import dev.lrxh.neptune.feature.queue.QueueEntry;
 import dev.lrxh.neptune.feature.queue.QueueService;
 import dev.lrxh.neptune.game.kit.Kit;
+import dev.lrxh.neptune.profile.data.ProfileState;
 import dev.lrxh.neptune.providers.clickable.Replacement;
 import dev.lrxh.neptune.utils.ItemBuilder;
 import dev.lrxh.neptune.utils.ItemUtils;
@@ -29,8 +32,15 @@ public class QueueSelectButton extends Button {
     @Override
     public ItemStack getItemStack(Player player) {
         List<String> lore = new ArrayList<>();
-
-        MenusLocale.QUEUE_SELECT_LORE.getStringList().forEach(line -> {
+        MenusLocale rawLore;
+        if (SettingsLocale.MULTIPLE_QUEUE.getBoolean()) {
+            if (kit.isQueued(player))
+                rawLore = MenusLocale.QUEUE_SELECT_MULTI_QUEUE_LORE_EXIT;
+            else
+                rawLore = MenusLocale.QUEUE_SELECT_MULTI_QUEUE_LORE_JOIN;
+        } else
+            rawLore = MenusLocale.QUEUE_SELECT_LORE;
+        rawLore.getStringList().forEach(line -> {
             String[] split = line.split("_");
 
             if (split.length != 3) {
@@ -63,8 +73,8 @@ public class QueueSelectButton extends Button {
             lore.add(line);
         });
 
-
-        return new ItemBuilder(kit.getIcon()).name(MenusLocale.QUEUE_SELECT_KIT_NAME.getString().replace("<kit>", kit.getDisplayName()))
+        return new ItemBuilder(kit.getIcon())
+                .name(MenusLocale.QUEUE_SELECT_KIT_NAME.getString().replace("<kit>", kit.getDisplayName()))
                 .lore(ItemUtils.getLore(lore,
                         new Replacement("<kit>", kit.getDisplayName()),
                         new Replacement("<kitName>", kit.getName()),
@@ -76,7 +86,11 @@ public class QueueSelectButton extends Button {
 
     @Override
     public void onClick(ClickType type, Player player) {
-        QueueService.get().add(new QueueEntry(kit, player.getUniqueId()), true);
-        player.closeInventory();
+        if (QueueService.get().has(kit, player.getUniqueId())) {
+            QueueService.get().remove(kit, player.getUniqueId());
+        }
+        else QueueService.get().add(new QueueEntry(kit, player.getUniqueId()), true);
+        if (!SettingsLocale.MULTIPLE_QUEUE.getBoolean()) player.closeInventory();
+        if (QueueService.get().getPlayerQueues(player).isEmpty()) API.getProfile(player).setState(ProfileState.IN_LOBBY);
     }
 }

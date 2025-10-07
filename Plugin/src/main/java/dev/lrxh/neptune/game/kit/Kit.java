@@ -5,6 +5,7 @@ import dev.lrxh.api.kit.IKit;
 import dev.lrxh.api.kit.IKitRule;
 import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.configs.impl.SettingsLocale;
+import dev.lrxh.neptune.feature.queue.QueueService;
 import dev.lrxh.neptune.game.arena.Arena;
 import dev.lrxh.neptune.game.kit.impl.KitRule;
 import dev.lrxh.neptune.game.match.impl.participant.Participant;
@@ -256,6 +257,10 @@ public class Kit implements IKit {
 
     public void addPlaying() {
         playing++;
+    }
+
+    public boolean isQueued(Player player) {
+        return QueueService.get().has(this, player.getUniqueId());
     }
 
     public void delete() {

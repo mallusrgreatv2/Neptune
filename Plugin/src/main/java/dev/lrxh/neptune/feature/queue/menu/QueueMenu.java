@@ -15,7 +15,7 @@ import java.util.List;
 public class QueueMenu extends Menu {
 
     public QueueMenu() {
-        super(MenusLocale.QUEUE_SELECT_TITLE.getString(), MenusLocale.QUEUE_SELECT_SIZE.getInt(), Filter.valueOf(MenusLocale.QUEUE_SELECT_FILTER.getString()));
+        super(MenusLocale.QUEUE_SELECT_TITLE.getString(), MenusLocale.QUEUE_SELECT_SIZE.getInt(), Filter.valueOf(MenusLocale.QUEUE_SELECT_FILTER.getString()), true);
     }
 
     @Override

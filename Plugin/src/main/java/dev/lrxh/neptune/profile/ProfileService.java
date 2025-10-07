@@ -40,7 +40,7 @@ public class ProfileService implements IProfileService {
     }
 
     public void removeProfile(UUID playerUUID) {
-        QueueService.get().remove(playerUUID);
+        QueueService.get().removeAll(playerUUID);
         Profile profile = profiles.get(playerUUID);
         profile.disband();
 

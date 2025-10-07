@@ -1,5 +1,6 @@
 package dev.lrxh.neptune.feature.hotbar.impl;
 
+import dev.lrxh.api.queue.IQueueEntry;
 import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.configs.impl.MessagesLocale;
 import dev.lrxh.neptune.feature.divisions.menu.DivisionsMenu;
@@ -26,6 +27,9 @@ import dev.lrxh.neptune.profile.impl.Profile;
 import dev.lrxh.neptune.providers.clickable.Replacement;
 import dev.lrxh.neptune.utils.CC;
 import dev.lrxh.neptune.utils.PlayerUtil;
+
+import java.util.List;
+
 import org.bukkit.entity.Player;
 
 @SuppressWarnings("unused")
@@ -47,9 +51,9 @@ public enum ItemAction {
         @Override
         public void execute(Player player) {
             API.getProfile(player.getUniqueId()).setState(ProfileState.IN_LOBBY);
-            QueueEntry queueEntry = QueueService.get().remove(player.getUniqueId());
+            List<IQueueEntry> entries = QueueService.get().removeAll(player.getUniqueId());
             MessagesLocale.QUEUE_LEAVE.send(player.getUniqueId(),
-                    new Replacement("<kit>", queueEntry.getKit().getDisplayName()));
+                    new Replacement("<kit>", String.join(", ", entries.stream().map(entry -> entry.getKit().getDisplayName()).toList())));
         }
     },
     KIT_EDITOR() {

@@ -2,6 +2,7 @@ package dev.lrxh.neptune.providers.placeholder;
 
 import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.Neptune;
+import dev.lrxh.neptune.configs.impl.SettingsLocale;
 import dev.lrxh.neptune.feature.party.Party;
 import dev.lrxh.neptune.feature.queue.QueueEntry;
 import dev.lrxh.neptune.feature.queue.QueueService;
@@ -73,11 +74,15 @@ public class PlaceholderUtil {
             QueueEntry queueEntry = QueueService.get().get(player.getUniqueId());
             if (queueEntry == null)
                 return line;
-            line = line.replaceAll("<kit>", queueEntry.getKit().getDisplayName());
+            if (SettingsLocale.MULTIPLE_QUEUE.getBoolean()) {
+                line = line.replaceAll("<kit>", String.join(", ", QueueService.get().getPlayerQueues(player).stream().map(entry -> entry.getKit().getDisplayName()).toList()));
+            } else {
+                line = line.replaceAll("<kit>", queueEntry.getKit().getDisplayName());
+                line = line.replaceAll("<kit_division>",
+                        profile.getGameData().get(queueEntry.getKit()).getDivision().getDisplayName());
+            }
             line = line.replaceAll("<maxPing>", String.valueOf(profile.getSettingData().getMaxPing()));
             line = line.replaceAll("<time>", String.valueOf(queueEntry.getTime().formatTime()));
-            line = line.replaceAll("<kit_division>",
-                    profile.getGameData().get(queueEntry.getKit()).getDivision().getDisplayName());
         }
 
         if (state.equals(ProfileState.IN_KIT_EDITOR)) {
