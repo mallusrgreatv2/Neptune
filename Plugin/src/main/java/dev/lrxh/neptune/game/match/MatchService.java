@@ -30,13 +30,10 @@ public class MatchService implements IMatchService {
         return instance;
     }
 
-    public void startMatch(List<Participant> participants, Kit kit, Arena arena, boolean duel, int rounds) {
+    public void startMatch(Participant playerRed, Participant playerBlue, Kit kit, Arena arena, boolean duel, int rounds) {
         if (!Neptune.get().isAllowMatches()) return;
-        participants.forEach((p) -> kit.addPlaying());
-
-        //Create teams
-        Participant playerRed = participants.get(0);
-        Participant playerBlue = participants.get(1);
+        kit.addPlaying();
+        kit.addPlaying();
 
         playerRed.setOpponent(playerBlue);
         playerRed.setColor(ParticipantColor.RED);
@@ -44,7 +41,7 @@ public class MatchService implements IMatchService {
         playerBlue.setOpponent(playerRed);
         playerBlue.setColor(ParticipantColor.BLUE);
 
-        SoloFightMatch match = new SoloFightMatch(arena, kit, duel, participants, playerRed, playerBlue, rounds);
+        SoloFightMatch match = new SoloFightMatch(arena, kit, duel, Arrays.asList(playerRed, playerBlue), playerRed, playerBlue, rounds);
         MatchReadyEvent event = new MatchReadyEvent(match);
         Bukkit.getPluginManager().callEvent(event);
         if (event.isCancelled()) {

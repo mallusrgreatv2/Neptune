@@ -90,7 +90,6 @@ public class QueueCheckTask extends NeptuneRunnable {
 
                 Participant participant1 = new Participant(player1);
                 Participant participant2 = new Participant(player2);
-                List<Participant> participants = Arrays.asList(participant1, participant2);
 
                 MessagesLocale.MATCH_FOUND.send(uuid1,
                         new Replacement("<opponent>", participant2.getNameUnColored()),
@@ -110,10 +109,8 @@ public class QueueCheckTask extends NeptuneRunnable {
                         new Replacement("<elo>", String.valueOf(profile2.getGameData().get(kit).getElo())),
                         new Replacement("<ping>", String.valueOf(ping2)));
 
-                Bukkit.getScheduler().runTask(Neptune.get(), () -> {
-                    MatchService.get().startMatch(participants, kit, arena, false,
-                            kit.is(KitRule.BEST_OF_THREE) ? 3 : 1);
-                });
+                Bukkit.getScheduler().runTask(Neptune.get(), () -> MatchService.get().startMatch(participant1, participant2, kit, arena, false,
+                        kit.is(KitRule.BEST_OF_THREE) ? 3 : 1));
 
             });
         }

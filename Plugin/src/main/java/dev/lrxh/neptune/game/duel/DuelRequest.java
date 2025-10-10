@@ -54,9 +54,7 @@ public class DuelRequest extends Request {
 
         Participant participant2 = new Participant(reciverPlayer);
 
-        List<Participant> participants = Arrays.asList(participant1, participant2);
-
-        MatchService.get().startMatch(participants, kit,
+        MatchService.get().startMatch(participant1, participant2, kit,
                 arena, true, rounds);
     }
 
@@ -113,8 +111,7 @@ public class DuelRequest extends Request {
         }
 
         Bukkit.getScheduler().runTask(Neptune.get(), () -> {
-            MatchService.get().startMatch(participants, kit, arena, false,
-                    kit.is(KitRule.BEST_OF_THREE) ? 3 : 1);
+            MatchService.get().startMatch(teamA, teamB, kit, arena);
         });
     }
 }
