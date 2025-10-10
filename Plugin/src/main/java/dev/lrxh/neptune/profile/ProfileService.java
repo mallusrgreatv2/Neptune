@@ -5,6 +5,9 @@ import dev.lrxh.api.profile.IProfileService;
 import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.feature.queue.QueueService;
 import dev.lrxh.neptune.profile.impl.Profile;
+import dev.lrxh.neptune.utils.tasks.NeptuneRunnable;
+import dev.lrxh.neptune.utils.tasks.TaskScheduler;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.IdentityHashMap;
@@ -28,10 +31,15 @@ public class ProfileService implements IProfileService {
     }
 
     public CompletableFuture<Void> createProfile(Player player) {
-        return Profile.create(player.getName(), player.getUniqueId(), plugin, false).thenAccept(profile -> {
-            profiles.put(player.getUniqueId(), profile);
-        });
+        return Profile.create(player.getName(), player.getUniqueId(), plugin, false)
+                .thenAccept(profile -> TaskScheduler.get().startTaskCurrentTick(new NeptuneRunnable() {
+                    @Override
+                    public void run() {
+                        profiles.put(player.getUniqueId(), profile);
+                    }
+                }));
     }
+
 
     public CompletableFuture<Profile> createProfile(UUID uuid) {
         return Profile.create("username", uuid, plugin, true).thenApply(profile -> {
