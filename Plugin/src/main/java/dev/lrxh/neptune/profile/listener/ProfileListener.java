@@ -52,7 +52,7 @@ public class ProfileListener implements Listener {
         event.joinMessage(null);
 
         ProfileService.get().createProfile(player)
-                .thenAccept(unused -> TaskScheduler.get().startTaskCurrentTick(new NeptuneRunnable() {
+                .thenAccept(unused -> TaskScheduler.get().startTask(new NeptuneRunnable() {
                     @Override
                     public void run() {
                         PlayerUtil.teleportToSpawn(player.getUniqueId());

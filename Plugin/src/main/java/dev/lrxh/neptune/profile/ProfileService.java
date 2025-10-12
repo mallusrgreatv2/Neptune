@@ -32,14 +32,8 @@ public class ProfileService implements IProfileService {
 
     public CompletableFuture<Void> createProfile(Player player) {
         return Profile.create(player.getName(), player.getUniqueId(), plugin, false)
-                .thenAccept(profile -> TaskScheduler.get().startTaskCurrentTick(new NeptuneRunnable() {
-                    @Override
-                    public void run() {
-                        profiles.put(player.getUniqueId(), profile);
-                    }
-                }));
+                .thenAccept(profile -> profiles.put(player.getUniqueId(), profile));
     }
-
 
     public CompletableFuture<Profile> createProfile(UUID uuid) {
         return Profile.create("username", uuid, plugin, true).thenApply(profile -> {
