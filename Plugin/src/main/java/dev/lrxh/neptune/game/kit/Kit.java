@@ -195,7 +195,7 @@ public class Kit implements IKit {
         for (Arena arena : arenas) {
             if (!arena.isEnabled())
                 continue;
-            if (arena.isUsed() && SettingsLocale.ARENA_DUPLICATES.getBoolean())
+            if (arena.isUsed() && !SettingsLocale.ARENA_DUPLICATES.getBoolean())
                 continue;
             if (!arena.isSetup() || !arena.isDoneLoading())
                 continue;
