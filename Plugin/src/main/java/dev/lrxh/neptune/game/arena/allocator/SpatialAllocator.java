@@ -1,6 +1,5 @@
 package dev.lrxh.neptune.game.arena.allocator;
 
-import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.impl.SettingsLocale;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -95,6 +94,14 @@ public class SpatialAllocator {
         try {
             allocations.put(id, alloc);
 
+            // ✅ Reserve the region first
+            for (int x = startChunkX; x < startChunkX + widthChunks; x++) {
+                for (int z = startChunkZ; z < startChunkZ + depthChunks; z++) {
+                    occupancy.put(keyFor(x, z), id);
+                }
+            }
+
+            // ✅ Now verify that all chunks were successfully marked
             int mismatches = 0;
             for (int x = startChunkX; x < startChunkX + widthChunks; x++) {
                 for (int z = startChunkZ; z < startChunkZ + depthChunks; z++) {
@@ -104,7 +111,9 @@ public class SpatialAllocator {
                     }
                 }
             }
+
             if (mismatches > 0) {
+                // Rollback if verification fails
                 for (int x = startChunkX; x < startChunkX + widthChunks; x++) {
                     for (int z = startChunkZ; z < startChunkZ + depthChunks; z++) {
                         occupancy.remove(keyFor(x, z), id);
@@ -116,6 +125,7 @@ public class SpatialAllocator {
 
             return alloc;
         } catch (RuntimeException ex) {
+            // Rollback if any unexpected exception occurs
             for (int x = startChunkX; x < startChunkX + widthChunks; x++) {
                 for (int z = startChunkZ; z < startChunkZ + depthChunks; z++) {
                     occupancy.remove(keyFor(x, z), id);
@@ -125,6 +135,7 @@ public class SpatialAllocator {
             throw ex;
         }
     }
+
 
     public synchronized void free(long allocationId) {
         Allocation alloc = allocations.remove(allocationId);

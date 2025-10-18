@@ -2,7 +2,6 @@ package dev.lrxh.neptune.game.arena;
 
 import dev.lrxh.api.arena.IArena;
 import dev.lrxh.blockChanger.snapshot.CuboidSnapshot;
-import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.impl.SettingsLocale;
 import dev.lrxh.neptune.game.arena.allocator.Allocation;
 import dev.lrxh.neptune.game.arena.allocator.SpatialAllocator;
@@ -98,6 +97,7 @@ public class Arena implements IArena {
     }
 
     public synchronized CompletableFuture<Arena> createDuplicate() {
+
         if (snapshot == null) {
             CompletableFuture<Arena> failed = new CompletableFuture<>();
             failed.completeExceptionally(new IllegalStateException("CuboidSnapshot not ready"));
@@ -127,13 +127,10 @@ public class Arena implements IArena {
 
         final int originalMinChunkX = min.getBlockX() >> 4;
         final int originalMinChunkZ = min.getBlockZ() >> 4;
-
         final int chunkOffsetX = allocation.chunkX - originalMinChunkX;
         final int chunkOffsetZ = allocation.chunkZ - originalMinChunkZ;
-
         final int offsetBlocksX = chunkOffsetX * 16;
         final int offsetBlocksZ = chunkOffsetZ * 16;
-
 
         Location newRedSpawn = (this.redSpawn != null ? LocationUtil.addOffset(this.redSpawn.clone(), offsetBlocksX, offsetBlocksZ) : null);
         Location newBlueSpawn = (this.blueSpawn != null ? LocationUtil.addOffset(this.blueSpawn.clone(), offsetBlocksX, offsetBlocksZ) : null);
@@ -141,9 +138,11 @@ public class Arena implements IArena {
         Location newMax = LocationUtil.addOffset(this.max.clone(), offsetBlocksX, offsetBlocksZ);
 
         CompletableFuture<Arena> future = new CompletableFuture<>();
+
         snapshot.offset(offsetBlocksX, offsetBlocksZ)
                 .thenApplyAsync(cuboidSnapshot -> {
-                    cuboidSnapshot.restore(true);
+                    cuboidSnapshot.restore(false);
+
                     return new Arena(
                             this.name + "#" + currentIndex,
                             this.displayName,
@@ -166,10 +165,12 @@ public class Arena implements IArena {
                     } else {
                         future.complete(arena);
                     }
+
                 });
 
         return future;
     }
+
 
     public List<String> getWhitelistedBlocksAsString() {
         List<String> result = new ArrayList<>();
@@ -200,7 +201,7 @@ public class Arena implements IArena {
 
     public void restore() {
         if (snapshot != null) {
-            snapshot.restore(true);
+            snapshot.restore(false);
         }
     }
 
