@@ -196,12 +196,21 @@ public class GlobalListener implements Listener {
     public void onFoodLevelChange(FoodLevelChangeEvent event) {
         if (event.getEntity() instanceof Player player) {
             Profile profile = API.getProfile(player);
-            if (profile != null && profile.getState().equals(ProfileState.IN_CUSTOM)) return;
+
+            if (profile == null) {
+                return;
+            }
+
+            if (profile.getState().equals(ProfileState.IN_CUSTOM)) {
+                return;
+            }
+
             if (isPlayerNotInMatch(profile) && profile.getState() != ProfileState.IN_CUSTOM) {
                 event.setCancelled(true);
             }
         }
     }
+
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onProjectileHit(ProjectileHitEvent event) {
