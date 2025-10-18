@@ -2,6 +2,11 @@
 
 ---
 
+<div align="center">
+  <a href="https://discord.gg/f6rUtpy6y4" target="_blank"><img alt="Discord" src="https://img.shields.io/badge/Discord-100000?style=for-the-badge&logo=Discord&logoColor=white&labelColor=7289da&color=7289da"/></a>&nbsp;
+  <a href="https://builtbybit.com/resources/neptune-practice-core.44588/" target="_blank"><img alt="BuiltByBit" src="https://img.shields.io/badge/Builtbybit-100000?style=for-the-badge&logo=builtbybit&logoColor=white&labelColor=7289da&color=7289da"/></a>
+</div>
+
 ## ✨ Core Features
 
 - 🥊 Kit System (Boxing, Crystal, Axe, and more)
