@@ -2,6 +2,7 @@ package dev.lrxh.neptune.game.arena;
 
 import dev.lrxh.api.arena.IArena;
 import dev.lrxh.blockChanger.snapshot.CuboidSnapshot;
+import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.impl.SettingsLocale;
 import dev.lrxh.neptune.game.arena.allocator.Allocation;
 import dev.lrxh.neptune.game.arena.allocator.SpatialAllocator;
@@ -142,7 +143,7 @@ public class Arena implements IArena {
         CompletableFuture<Arena> future = new CompletableFuture<>();
         snapshot.offset(offsetBlocksX, offsetBlocksZ)
                 .thenApplyAsync(cuboidSnapshot -> {
-                    cuboidSnapshot.restore(false);
+                    cuboidSnapshot.restore(true);
                     return new Arena(
                             this.name + "#" + currentIndex,
                             this.displayName,

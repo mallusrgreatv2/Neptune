@@ -20,7 +20,9 @@ import dev.lrxh.neptune.utils.tasks.NeptuneRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Queue;
+import java.util.UUID;
 
 public class QueueCheckTask extends NeptuneRunnable {
     @Override

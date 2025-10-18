@@ -5,9 +5,6 @@ import dev.lrxh.api.profile.IProfileService;
 import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.feature.queue.QueueService;
 import dev.lrxh.neptune.profile.impl.Profile;
-import dev.lrxh.neptune.utils.tasks.NeptuneRunnable;
-import dev.lrxh.neptune.utils.tasks.TaskScheduler;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.IdentityHashMap;
