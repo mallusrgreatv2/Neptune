@@ -7,6 +7,17 @@
   <a href="https://builtbybit.com/resources/neptune-practice-core.44588/" target="_blank"><img alt="BuiltByBit" src="https://img.shields.io/badge/Builtbybit-100000?style=for-the-badge&logo=builtbybit&logoColor=white&labelColor=7289da&color=7289da"/></a>
 </div>
 
+---
+
+## 💿 Installation
+- Make sure you are using the latest [Paper](https://papermc.io/downloads/paper) version.
+- Download the latest [Github Actions](https://github.com/Solara-Development/Neptune/actions) build.
+> [!NOTE]
+> A Github account may be required to download.
+- Once downloaded, place the `.jar` file inside the `/plugins` directory on your server.
+- Restart your server
+- Then do `/neptune`
+
 ## ✨ Core Features
 
 - 🥊 Kit System (Boxing, Crystal, Axe, and more)
@@ -19,6 +30,7 @@
 - 🏆 Instant Leaderboards Updates
 - 🧩 Highly Customizable
 - ⚡ Dynamic Arena Creation
+- 📄 Party System
 
 ---
 
