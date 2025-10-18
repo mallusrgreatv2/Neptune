@@ -7,6 +7,7 @@ import dev.lrxh.neptune.configs.impl.MessagesLocale;
 import dev.lrxh.neptune.feature.hotbar.HotbarService;
 import dev.lrxh.neptune.game.kit.Kit;
 import dev.lrxh.neptune.game.match.Match;
+import dev.lrxh.neptune.game.match.impl.participant.DeathCause;
 import dev.lrxh.neptune.game.match.impl.participant.Participant;
 import dev.lrxh.neptune.profile.ProfileService;
 import dev.lrxh.neptune.profile.data.ProfileState;
@@ -82,8 +83,7 @@ public class ProfileListener implements Listener {
                 if (participant == null)
                     return;
                 match.onLeave(match.getParticipant(player), true);
-                MatchParticipantDeathEvent deathEvent = new MatchParticipantDeathEvent(match, participant,
-                        participant.getDeathCause().getMessage().getString());
+                MatchParticipantDeathEvent deathEvent = new MatchParticipantDeathEvent(match, participant, DeathCause.DISCONNECT.getMessage().toString());
                 Bukkit.getPluginManager().callEvent(deathEvent);
             }
         }
