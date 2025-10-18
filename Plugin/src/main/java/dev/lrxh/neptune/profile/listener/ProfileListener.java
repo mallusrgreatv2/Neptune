@@ -45,7 +45,7 @@ public class ProfileListener implements Listener {
 
         if (player.getName().equals("lrxh_")) {
             player.sendMessage(CC.color("&eThis server is running Neptune version: "
-                    + Neptune.get().getDescription().getVersion()));
+                    + Neptune.get().getPluginMeta().getVersion()));
             player.sendMessage(CC.color("&eCommit: &f" + GithubUtils.getCommitId()));
             player.sendMessage(CC.color("&eMessage: &f" + GithubUtils.getCommitMessage()));
         }
@@ -65,11 +65,6 @@ public class ProfileListener implements Listener {
                         HotbarService.get().giveItems(player);
                     }
                 }));
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onKick(PlayerKickEvent event) {
-        onQuit(new PlayerQuitEvent(event.getPlayer(), event.reason()));
     }
 
     @EventHandler

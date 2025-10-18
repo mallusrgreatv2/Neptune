@@ -124,8 +124,15 @@ public class Arena implements IArena {
             return failed;
         }
 
-        int offsetBlocksX = allocation.chunkX * 16;
-        int offsetBlocksZ = allocation.chunkZ * 16;
+        final int originalMinChunkX = min.getBlockX() >> 4;
+        final int originalMinChunkZ = min.getBlockZ() >> 4;
+
+        final int chunkOffsetX = allocation.chunkX - originalMinChunkX;
+        final int chunkOffsetZ = allocation.chunkZ - originalMinChunkZ;
+
+        final int offsetBlocksX = chunkOffsetX * 16;
+        final int offsetBlocksZ = chunkOffsetZ * 16;
+
 
         Location newRedSpawn = (this.redSpawn != null ? LocationUtil.addOffset(this.redSpawn.clone(), offsetBlocksX, offsetBlocksZ) : null);
         Location newBlueSpawn = (this.blueSpawn != null ? LocationUtil.addOffset(this.blueSpawn.clone(), offsetBlocksX, offsetBlocksZ) : null);
