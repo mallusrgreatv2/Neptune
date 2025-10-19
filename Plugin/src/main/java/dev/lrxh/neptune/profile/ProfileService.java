@@ -33,9 +33,7 @@ public class ProfileService implements IProfileService {
     }
 
     public CompletableFuture<Profile> createProfile(UUID uuid) {
-        return Profile.create("username", uuid, plugin, true).thenApply(profile -> {
-            return profile;
-        });
+        return Profile.create("username", uuid, plugin, true).thenApply(profile -> profile);
     }
 
     public void removeProfile(UUID playerUUID) {
@@ -69,11 +67,13 @@ public class ProfileService implements IProfileService {
 
     @Override
     public CompletableFuture<IProfile> getProfile(UUID uuid) {
+        return _getProfile(uuid).thenApply(p -> p);
+    }
+
+    public CompletableFuture<Profile> _getProfile(UUID uuid) {
         Profile profile = getByUUID(uuid);
         return (profile != null)
                 ? CompletableFuture.completedFuture(profile)
-                : createProfile(uuid).thenApply(p -> (IProfile) p);
+                : createProfile(uuid).thenApply(p -> p);
     }
-
-
 }

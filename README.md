@@ -10,10 +10,13 @@
 ---
 
 ## 💿 Installation
+
 - Make sure you are using the latest [Paper](https://papermc.io/downloads/paper) version.
 - Download the latest [Github Actions](https://github.com/Solara-Development/Neptune/actions) build.
+
 > [!NOTE]
 > A Github account may be required to download.
+
 - Once downloaded, place the `.jar` file inside the `/plugins` directory on your server.
 - Restart your server
 - Then do `/neptune`

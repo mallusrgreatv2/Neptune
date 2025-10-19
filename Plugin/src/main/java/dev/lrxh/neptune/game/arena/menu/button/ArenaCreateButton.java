@@ -7,6 +7,7 @@ import dev.lrxh.neptune.profile.impl.Profile;
 import dev.lrxh.neptune.utils.CC;
 import dev.lrxh.neptune.utils.ItemBuilder;
 import dev.lrxh.neptune.utils.menu.Button;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -21,11 +22,13 @@ public class ArenaCreateButton extends Button {
 
     @Override
     public void onClick(ClickType type, Player player) {
-        World world = Neptune.get().getCache().getSpawn().getWorld();
-        if (world == null) {
+        Location location = Neptune.get().getCache().getSpawn();
+        if (location == null) {
             player.sendMessage(CC.error("Spawn world is not set!, use /neptune setspawn"));
             return;
         }
+
+        World world = location.getWorld();
 
         if (player.getWorld().equals(world)) {
             player.sendMessage(CC.error("You cannot create an arena in the same world as the spawn!"));
