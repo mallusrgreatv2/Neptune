@@ -201,7 +201,7 @@ public class Arena implements IArena {
 
     public void restore() {
         if (snapshot != null) {
-            snapshot.restore(false);
+            snapshot.restore(true);
         }
     }
 
