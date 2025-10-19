@@ -24,7 +24,7 @@ public class RecentMatchPlaceholder implements Placeholder {
 
     @Override
     public String parse(OfflinePlayer player, String string) {
-        Profile profile = API.getProfile(player);
+        Profile profile = API.getProfile(player.getUniqueId());
         if (profile == null) return string;
 
         Matcher matcher = PATTERN.matcher(string);

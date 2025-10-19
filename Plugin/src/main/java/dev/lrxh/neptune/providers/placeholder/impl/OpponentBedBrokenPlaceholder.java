@@ -20,7 +20,7 @@ public class OpponentBedBrokenPlaceholder implements Placeholder {
 
     @Override
     public String parse(OfflinePlayer player, String string) {
-        Profile profile = API.getProfile(player);
+        Profile profile = API.getProfile(player.getUniqueId());
         if (profile == null) return string;
         Match match = profile.getMatch();
         if (profile.getState() != ProfileState.IN_GAME || match == null || !match.getKit().is(KitRule.BED_WARS))

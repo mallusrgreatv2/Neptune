@@ -14,7 +14,7 @@ public class BestStreakPlaceholder implements Placeholder {
 
     @Override
     public String parse(OfflinePlayer player, String string) {
-        Profile profile = API.getProfile(player);
+        Profile profile = API.getProfile(player.getUniqueId());
         if (profile == null) return string;
         GlobalStats globalStats = profile.getGameData().getGlobalStats();
         return String.valueOf(globalStats.getBestStreak());

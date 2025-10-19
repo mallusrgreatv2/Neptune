@@ -15,7 +15,7 @@ public class PlayerBluePingPlaceholder implements Placeholder {
 
     @Override
     public String parse(OfflinePlayer player, String string) {
-        Profile profile = API.getProfile(player);
+        Profile profile = API.getProfile(player.getUniqueId());
         if (profile == null) return string;
         Match match = profile.getMatch();
         if (match == null || !(match instanceof SoloFightMatch soloFightMatch)) return "";

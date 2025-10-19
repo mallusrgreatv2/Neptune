@@ -13,7 +13,7 @@ public class PartyMaxPlaceholder implements Placeholder {
 
     @Override
     public String parse(OfflinePlayer player, String string) {
-        Party party = API.getProfile(player).getGameData().getParty();
+        Party party = API.getProfile(player.getUniqueId()).getGameData().getParty();
         if (party == null) return "";
         return String.valueOf(party.getMaxUsers());
     }

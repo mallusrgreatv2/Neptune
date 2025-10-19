@@ -15,7 +15,7 @@ public class ColorPlaceholder implements Placeholder {
 
     @Override
     public String parse(OfflinePlayer player, String string) {
-        Profile profile = API.getProfile(player);
+        Profile profile = API.getProfile(player.getUniqueId());
         if (profile == null)
             return "";
         Match match = profile.getMatch();
