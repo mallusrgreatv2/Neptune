@@ -234,7 +234,6 @@ public class MatchListener implements Listener {
                 PersistentDataType.STRING);
 
         if (uuid == null || uuid.isEmpty()) {
-            event.setCancelled(true);
             return;
         }
 
