@@ -33,12 +33,6 @@ import java.util.Arrays;
 public class ProfileListener implements Listener {
 
     @EventHandler
-    public void onPreJoin(PlayerLoginEvent event) {
-        if (!Neptune.get().isAllowJoin())
-            event.disallow(PlayerLoginEvent.Result.KICK_OTHER, CC.color("&cDatabasing updating..."));
-    }
-
-    @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 

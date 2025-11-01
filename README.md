@@ -15,7 +15,8 @@
 
 > You can download from:
 >
-> - [**Nightly**](https://nightly.link/Solara-Development/Neptune/workflows/maven/master/Plugin.zip) (**latest**; more features, more bugs) <ins>**recommended**</ins>
+> - [**Nightly**](https://nightly.link/Solara-Development/Neptune/workflows/maven/master/Plugin.zip) (**latest**; more
+    features, more bugs) <ins>**recommended**</ins>
 > - [**Modrinth**](https://modrinth.com/plugin/neptunepractice#download) (**stable**; less features, less bugs).
 
 2. Once downloaded, place the `.jar` file inside the **`/plugins`** directory on your server.
