@@ -10,12 +10,10 @@ import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
-import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -103,7 +101,6 @@ public class Arena implements IArena {
     public synchronized CompletableFuture<VirtualArena> createDuplicate() {
         CompletableFuture<VirtualArena> future = new CompletableFuture<>();
         UUID uuid = UUID.randomUUID();
-        long methodStart = System.currentTimeMillis();
         WorldCreator creator = new WorldCreator(uuid.toString())
                 .type(WorldType.NORMAL)
                 .generator(new ChunkGenerator() {
@@ -113,12 +110,7 @@ public class Arena implements IArena {
                     }
 
                     @Override
-                    public @NotNull List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
-                        return new ArrayList<>();
-                    }
-
-                    @Override
-                    public @Nullable Location getFixedSpawnLocation(@NotNull World world, @NotNull Random random) {
+                    public @NotNull Location getFixedSpawnLocation(@NotNull World world, @NotNull Random random) {
                         return new Location(world, 0, 0, 0);
                     }
 
@@ -130,11 +122,6 @@ public class Arena implements IArena {
 
                     @Override
                     public boolean shouldGenerateSurface(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean shouldGenerateBedrock() {
                         return false;
                     }
 
@@ -171,10 +158,8 @@ public class Arena implements IArena {
                 });
 
         BlockChanger.createVirtualWorld(creator).thenAccept(virtualWorld -> {
-            long virtualWorldCreatedAt = System.currentTimeMillis();
             try {
                 World world = virtualWorld.getWorld();
-                long t1 = System.currentTimeMillis();
 
                 Location min = this.min.clone();
                 min.setWorld(world);
@@ -185,18 +170,11 @@ public class Arena implements IArena {
                 Location blueSpawn = this.blueSpawn.clone();
                 blueSpawn.setWorld(world);
 
-                long t2 = System.currentTimeMillis();
 
-                long pasteStart = System.currentTimeMillis();
                 virtualWorld.paste(snapshot);
 
-                long pasteEnd = System.currentTimeMillis();
-
-                long idStart = System.currentTimeMillis();
                 String dupName = this.name + "_" + uuid;
-                long idEnd = System.currentTimeMillis();
 
-                long createStart = System.currentTimeMillis();
                 VirtualArena duplicate = new VirtualArena(
                         dupName,
                         this.displayName,
@@ -211,18 +189,6 @@ public class Arena implements IArena {
                         this,
                         virtualWorld
                 );
-
-                long createEnd = System.currentTimeMillis();
-
-                long methodEnd = System.currentTimeMillis();
-                Bukkit.getLogger().info("[Arena:" + name + "] createDuplicate() finished successfully in "
-                        + (methodEnd - methodStart) + "ms total"
-                        + " | breakdown: world=" + (virtualWorldCreatedAt - methodStart)
-                        + "ms, clone=" + (t2 - t1)
-                        + "ms, paste=" + (pasteEnd - pasteStart)
-                        + "ms, namePrep=" + (idEnd - idStart)
-                        + "ms, arenaCtor=" + (createEnd - createStart)
-                        + "ms");
 
                 future.complete(duplicate);
 
