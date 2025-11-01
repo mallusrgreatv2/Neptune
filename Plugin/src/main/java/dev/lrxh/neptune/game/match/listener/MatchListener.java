@@ -803,7 +803,7 @@ public class MatchListener implements Listener {
             if (API.getProfile(player).getState().equals(ProfileState.IN_CUSTOM))
                 return;
             Optional<Profile> profileOpt = getProfile(player);
-            if (!profileOpt.isPresent()) {
+            if (profileOpt.isEmpty()) {
                 event.setCancelled(true);
                 return;
             }
@@ -821,7 +821,7 @@ public class MatchListener implements Listener {
     public void onPlayerRegainHealth(EntityRegainHealthEvent event) {
         if (event.getEntity() instanceof Player player) {
             Optional<Profile> profileOpt = getProfile(player);
-            if (!profileOpt.isPresent())
+            if (profileOpt.isEmpty())
                 return;
 
             Profile profile = profileOpt.get();

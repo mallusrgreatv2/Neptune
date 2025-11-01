@@ -82,8 +82,6 @@ public final class Neptune extends JavaPlugin {
     private Cache cache;
     private boolean placeholder = false;
     @Setter
-    private boolean allowJoin;
-    @Setter
     private boolean allowMatches;
 
     public static Neptune get() {

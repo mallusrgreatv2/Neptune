@@ -72,7 +72,6 @@ public class KitProcedureListener implements Listener {
             case SET_INV -> {
                 if (!input.equalsIgnoreCase("Done")) return;
                 event.setCancelled(true);
-                Neptune.get().setAllowJoin(false);
 
                 Kit kit = profile.getKitProcedure().getKit();
 
@@ -114,7 +113,6 @@ public class KitProcedureListener implements Listener {
                     PlayerUtil.reset(player);
                 });
                 HotbarService.get().giveItems(player);
-                Neptune.get().setAllowJoin(true);
             }
             case SET_ICON -> {
                 if (!input.equalsIgnoreCase("Done")) return;
