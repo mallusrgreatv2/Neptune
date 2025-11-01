@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 
 import java.util.List;
 import java.util.Objects;
@@ -88,9 +87,5 @@ public class VirtualArena implements IArena {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    public World getBukkitWorld() {
-        return virtualWorld != null ? virtualWorld.getWorld() : null;
     }
 }
