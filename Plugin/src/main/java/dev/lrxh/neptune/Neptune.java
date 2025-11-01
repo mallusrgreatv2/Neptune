@@ -91,11 +91,9 @@ public final class Neptune extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        allowJoin = false;
         allowMatches = false;
         loadManager();
         initAPI();
-        allowJoin = true;
         allowMatches = true;
     }
 
