@@ -210,6 +210,10 @@ public class Kit implements IKit {
 
     @Override
     public void giveLoadout(UUID playerUUID) {
+        giveLoadout(playerUUID, true);
+    }
+
+    public void giveLoadout(UUID playerUUID, boolean giveEffects) {
         Player player = Bukkit.getPlayer(playerUUID);
         if (player == null)
             return;

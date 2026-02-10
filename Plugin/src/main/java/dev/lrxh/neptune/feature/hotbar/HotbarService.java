@@ -46,7 +46,9 @@ public class HotbarService extends IService {
 
     public void giveItems(Player player) {
         player.getInventory().clear();
+        player.getActivePotionEffects().clear();
         ProfileState profileState = API.getProfile(player).getState();
+
         if (profileState.equals(ProfileState.IN_KIT_EDITOR)) return;
 
         Hotbar inventory = items.get(profileState);

@@ -33,7 +33,7 @@ public class KitEditorSelectButton extends Button {
         profile.getGameData().setKitEditor(kit);
         profile.setState(ProfileState.IN_KIT_EDITOR);
 
-        kit.giveLoadout(player.getUniqueId());
+        kit.giveLoadout(player.getUniqueId(), false);
 
         player.updateInventory();
     }
