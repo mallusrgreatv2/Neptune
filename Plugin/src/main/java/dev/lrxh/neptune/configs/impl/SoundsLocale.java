@@ -63,4 +63,6 @@ public enum SoundsLocale implements IDataAccessor {
             return null;
         }
     }
+
+    public void update() {}
 }

@@ -50,5 +50,13 @@ public class ConfigService {
         ScoreboardLocale.TITLE.load();
         CosmeticsLocale.LIGHTNING_DISPLAY_NAME.load();
         SoundsLocale.MATCH_START.load();
+
+        HotbarLocale.LOBBY_PARTY_CREATE_NAME.update();
+        MessagesLocale.MATCH_FOUND.update();
+        SettingsLocale.SPAWN_LOCATION.update();
+        MenusLocale.FILTER_NAME.update();
+        ScoreboardLocale.TITLE.update();
+        CosmeticsLocale.LIGHTNING_DISPLAY_NAME.update();
+        SoundsLocale.MATCH_START.update();
     }
 }
