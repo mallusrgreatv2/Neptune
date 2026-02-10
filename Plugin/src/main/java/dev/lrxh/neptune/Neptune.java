@@ -35,14 +35,15 @@ import dev.lrxh.neptune.feature.settings.command.SettingsCommand;
 import dev.lrxh.neptune.game.arena.Arena;
 import dev.lrxh.neptune.game.arena.ArenaService;
 import dev.lrxh.neptune.game.arena.command.ArenaProvider;
-import dev.lrxh.neptune.game.arena.procedure.ArenaProcedureListener;
+import dev.lrxh.neptune.game.arena.listener.ArenaEditorChatListener;
 import dev.lrxh.neptune.game.duel.command.DuelCommand;
 import dev.lrxh.neptune.game.kit.Kit;
 import dev.lrxh.neptune.game.kit.KitService;
 import dev.lrxh.neptune.game.kit.command.KitEditorCommand;
 import dev.lrxh.neptune.game.kit.command.KitProvider;
 import dev.lrxh.neptune.game.kit.command.StatsCommand;
-import dev.lrxh.neptune.game.kit.procedure.KitProcedureListener;
+import dev.lrxh.neptune.game.kit.listener.KitEditorChatListener;
+import dev.lrxh.neptune.game.kit.listener.KitEditorListener;
 import dev.lrxh.neptune.game.match.MatchService;
 import dev.lrxh.neptune.game.match.commands.MatchHistoryCommand;
 import dev.lrxh.neptune.game.match.commands.SpectateCommand;
@@ -151,8 +152,9 @@ public final class Neptune extends JavaPlugin {
                         new GlobalListener(),
                         new ItemListener(),
                         new MenuListener(),
-                        new ArenaProcedureListener(),
-                        new KitProcedureListener(),
+                        new ArenaEditorChatListener(),
+                        new KitEditorChatListener(),
+                        new KitEditorListener(),
                         new ItemBrowserListener())
                 .forEach(listener -> getServer().getPluginManager().registerEvents(listener, this));
     }

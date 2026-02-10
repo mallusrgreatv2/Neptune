@@ -1,4 +1,4 @@
-package dev.lrxh.neptune.game.kit.procedure;
+package dev.lrxh.neptune.game.kit.listener;
 
 import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.Neptune;
@@ -7,6 +7,7 @@ import dev.lrxh.neptune.game.kit.Kit;
 import dev.lrxh.neptune.game.kit.KitService;
 import dev.lrxh.neptune.game.kit.menu.KitManagementMenu;
 import dev.lrxh.neptune.game.kit.menu.KitsManagementMenu;
+import dev.lrxh.neptune.game.kit.procedure.KitProcedureType;
 import dev.lrxh.neptune.profile.ProfileService;
 import dev.lrxh.neptune.profile.impl.Profile;
 import dev.lrxh.neptune.utils.CC;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class KitProcedureListener implements Listener {
+public class KitEditorChatListener implements Listener {
     @EventHandler
     public void onChat(AsyncChatEvent event) {
         Player player = event.getPlayer();

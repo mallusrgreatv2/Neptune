@@ -5,7 +5,6 @@ import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.impl.MessagesLocale;
 import dev.lrxh.neptune.feature.hotbar.HotbarService;
-import dev.lrxh.neptune.game.kit.Kit;
 import dev.lrxh.neptune.game.match.Match;
 import dev.lrxh.neptune.game.match.impl.participant.DeathCause;
 import dev.lrxh.neptune.game.match.impl.participant.Participant;
@@ -24,11 +23,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-
-import java.util.Arrays;
 
 public class ProfileListener implements Listener {
 
@@ -87,27 +83,5 @@ public class ProfileListener implements Listener {
         }
 
         ProfileService.get().removeProfile(player.getUniqueId());
-    }
-
-    @EventHandler
-    public void onInventoryClose(InventoryCloseEvent event) {
-        Player player = (Player) event.getPlayer();
-        Profile profile = API.getProfile(player);
-        if (profile == null)
-            return;
-        if (profile.hasState(ProfileState.IN_KIT_EDITOR)) {
-            Kit kit = profile.getGameData().getKitEditor();
-
-            profile.getGameData().get(kit)
-                    .setKitLoadout(Arrays.asList(player.getInventory().getContents()));
-
-            MessagesLocale.KIT_EDITOR_STOP.send(player.getUniqueId(), Placeholder.parsed("kit", kit.getDisplayName()));
-
-            if (profile.getGameData().getParty() == null) {
-                profile.setState(ProfileState.IN_LOBBY);
-            } else {
-                profile.setState(ProfileState.IN_PARTY);
-            }
-        }
     }
 }

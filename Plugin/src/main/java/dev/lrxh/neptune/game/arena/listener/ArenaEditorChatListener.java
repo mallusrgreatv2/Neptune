@@ -1,4 +1,4 @@
-package dev.lrxh.neptune.game.arena.procedure;
+package dev.lrxh.neptune.game.arena.listener;
 
 import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.Neptune;
@@ -7,19 +7,18 @@ import dev.lrxh.neptune.game.arena.ArenaService;
 import dev.lrxh.neptune.game.arena.menu.ArenaManagementMenu;
 import dev.lrxh.neptune.game.arena.menu.ArenasManagementMenu;
 import dev.lrxh.neptune.game.arena.menu.WhitelistedBlocksMenu;
+import dev.lrxh.neptune.game.arena.procedure.ArenaProcedureType;
 import dev.lrxh.neptune.profile.impl.Profile;
 import dev.lrxh.neptune.utils.CC;
 import dev.lrxh.neptune.utils.tasks.NeptuneRunnable;
 import io.papermc.paper.event.player.AsyncChatEvent;
-import lombok.AllArgsConstructor;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-@AllArgsConstructor
-public class ArenaProcedureListener implements Listener {
+public class ArenaEditorChatListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncChatEvent event) {
