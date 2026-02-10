@@ -32,7 +32,7 @@ public class ProfileService implements IProfileService {
                 .thenAccept(profile -> profiles.put(player.getUniqueId(), profile));
     }
 
-    public CompletableFuture<Profile> createProfile(UUID uuid) {
+    public CompletableFuture<Profile> createFakeProfile(UUID uuid) {
         return Profile.create("username", uuid, plugin, true).thenApply(profile -> profile);
     }
 
@@ -47,22 +47,11 @@ public class ProfileService implements IProfileService {
     }
 
     public void saveAll() {
-        for (Profile profile : profiles.values()) {
-            Profile.save(profile);
-        }
+        profiles.values().parallelStream().forEach(Profile::save);
     }
 
     public Profile getByUUID(UUID playerUUID) {
-        Profile profile = profiles.get(playerUUID);
-        if (profile != null)
-            return profile;
-
-        for (UUID uuid : profiles.keySet()) {
-            if (uuid.toString().equals(playerUUID.toString()))
-                return profiles.get(uuid);
-        }
-
-        return null;
+        return profiles.get(playerUUID);
     }
 
     @Override
@@ -74,6 +63,6 @@ public class ProfileService implements IProfileService {
         Profile profile = getByUUID(uuid);
         return (profile != null)
                 ? CompletableFuture.completedFuture(profile)
-                : createProfile(uuid).thenApply(p -> p);
+                : createFakeProfile(uuid).thenApply(p -> p);
     }
 }

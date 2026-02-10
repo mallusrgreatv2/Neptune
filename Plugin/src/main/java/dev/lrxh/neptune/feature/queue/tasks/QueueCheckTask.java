@@ -31,8 +31,9 @@ public class QueueCheckTask extends NeptuneRunnable {
 
         for (Queue<QueueEntry> queue : QueueService.get().getAllQueues().values()) {
             for (QueueEntry entry : queue) {
-                Player player = Bukkit.getPlayer(entry.getUuid());
-                if (player != null) {
+                Profile profile = API.getProfile(entry.getUuid());
+                if (profile != null && profile.getPlayer() != null) {
+                    Player player = profile.getPlayer();
                     player.sendActionBar(CC.returnMessage(player, MessagesLocale.QUEUE_ACTION_BAR.getString()));
                 }
             }
@@ -77,8 +78,8 @@ public class QueueCheckTask extends NeptuneRunnable {
                 continue;
             }
 
-            Player player1 = Bukkit.getPlayer(uuid1);
-            Player player2 = Bukkit.getPlayer(uuid2);
+            Player player1 = profile1.getPlayer();
+            Player player2 = profile2.getPlayer();
             if (player1 == null || player2 == null) {
                 continue;
             }

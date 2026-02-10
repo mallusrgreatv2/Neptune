@@ -57,7 +57,7 @@ public abstract class Match implements IMatch {
     private final HashSet<Location> placedBlocks = new HashSet<>();
     private final HashMap<Location, BlockData> changes = new HashMap<>();
     private final Set<Location> liquids = new HashSet<>();
-    private final HashSet<Entity> entities = new HashSet<>();
+    private final List<Entity> entities = new ArrayList<>();
     private final Time time = new Time();
     private MatchState state;
     private VirtualArena arena;
@@ -99,12 +99,7 @@ public abstract class Match implements IMatch {
     }
 
     public Participant getParticipant(Player player) {
-        for (Participant participant : participants) {
-            if (participant.getPlayerUUID().equals(player.getUniqueId())) {
-                return participant;
-            }
-        }
-        return null;
+        return getParticipant(player.getUniqueId());
     }
 
     public void sendTitle(TextComponent header, TextComponent footer, int duration) {
@@ -164,10 +159,18 @@ public abstract class Match implements IMatch {
     }
 
     public void showPlayerForSpectators() {
-        forEachSpectator(spectator -> forEachPlayer(alivePlayer -> {
-            spectator.showPlayer(Neptune.get(), alivePlayer);
-            alivePlayer.hidePlayer(Neptune.get(), spectator);
-        }));
+        List<Player> alivePlayers = new ArrayList<>();
+        forEachPlayer(alivePlayers::add);
+
+        List<Player> spectatorPlayers = new ArrayList<>();
+        forEachSpectator(spectatorPlayers::add);
+
+        for (Player spectator : spectatorPlayers) {
+            for (Player alivePlayer : alivePlayers) {
+                spectator.showPlayer(Neptune.get(), alivePlayer);
+                alivePlayer.hidePlayer(Neptune.get(), spectator);
+            }
+        }
     }
 
     public void forEachPlayer(Consumer<Player> action) {
