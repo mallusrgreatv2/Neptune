@@ -23,13 +23,18 @@ import dev.lrxh.neptune.utils.PlayerUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.Context;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BiFunction;
 
 @Getter
 @Setter
@@ -153,6 +158,23 @@ public class TeamFightMatch extends Match implements ITeamFightMatch {
             PlayerUtil.doVelocityChange(participant.getPlayerUUID());
             end(participant);
         }
+    }
+
+    @Override
+    public BiFunction<ArgumentQueue, Context, Tag> getColoredNameResolver(Participant participant) {
+        MatchTeam team = getParticipantTeam(participant);
+        return (ArgumentQueue args, Context context) -> {
+            Player receiver = context.targetAsType(Player.class);
+            Participant receiverParticipant = getParticipant(receiver);
+            MatchTeam receiverTeam = getParticipantTeam(receiverParticipant);
+            MessagesLocale message;
+            if (receiverParticipant == null) message = MessagesLocale.MATCH_SPECTATOR_TEAM_NAME;
+            else if (team == receiverTeam) message = MessagesLocale.MATCH_OWN_TEAM_NAME;
+            else message = MessagesLocale.MATCH_OPPONENT_TEAM_NAME;
+            return Tag.inserting(CC.returnMessage(receiver,
+                    message.getString(),
+                    Placeholder.unparsed("name", participant.getName())));
+        };
     }
 
     public boolean onSameTeam(UUID playerUUID, UUID otherUUID) {

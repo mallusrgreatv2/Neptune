@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 @UtilityClass
 public class CC {
-    private MiniMessage mm = MiniMessage.miniMessage();
+    private final MiniMessage mm = MiniMessage.miniMessage();
     public TextComponent error(String message) {
         return color(MessagesLocale.ERROR_MESSAGE.getString().replace("<error>", message));
     }
@@ -84,9 +84,7 @@ public class CC {
     public static Component replaceLegacy(Component input) {
         return input.replaceText(builder ->
             builder.match(Pattern.compile("([&][a-fk-or0-9])|([§&]x[§&][0-9a-f][§&][0-9a-f][§&][0-9a-f][§&][0-9a-f][§&][0-9a-f][§&][0-9a-f])|((?i)&#([a-f0-9]{6}))"))
-                .replacement((match, builder1) -> {
-                    return mm.deserialize(convertLegacyToMiniMessage(match.group()));
-                })
+                .replacement((match, builder1) -> mm.deserialize(convertLegacyToMiniMessage(match.group())))
         );
     }
     public Component returnMessage(Player player, String message) {
@@ -94,7 +92,7 @@ public class CC {
     }
     public Component returnMessage(Player player, String message, TagResolver resolver) {
         String minimessageInput = convertLegacyToMiniMessage(message);
-        Component component = mm.deserialize(minimessageInput, TagResolver.resolver(resolver, PlaceholderUtil.getPlaceholders(player)));
+        Component component = mm.deserialize(minimessageInput, player, TagResolver.resolver(resolver, PlaceholderUtil.getPlaceholders(player)));
         if (Neptune.get().isPlaceholder()) {
             try {
                 return replaceLegacy(PAPIComponents.setPlaceholders(player, component));

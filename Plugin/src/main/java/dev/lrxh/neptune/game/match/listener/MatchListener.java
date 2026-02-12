@@ -481,7 +481,7 @@ public class MatchListener implements Listener {
             if (blockType.equals(Material.HEAVY_WEIGHTED_PRESSURE_PLATE)) {
                 if (participant.setCurrentCheckPoint(event.getClickedBlock().getLocation().clone().add(0, 1, 0))) {
                     match.broadcast(MessagesLocale.PARKOUR_CHECKPOINT, TagResolver.resolver(
-                            Placeholder.unparsed("player", participant.getNameColored()),
+                            TagResolver.resolver("player", match.getColoredNameResolver(participant)),
                             Placeholder.unparsed("checkpoint", String.valueOf(participant.getCheckPoint())),
                             Placeholder.unparsed("time", participant.getTime().formatSecondsMillis())
                     ));
@@ -489,7 +489,7 @@ public class MatchListener implements Listener {
             } else if (blockType.equals(Material.LIGHT_WEIGHTED_PRESSURE_PLATE)) {
                 match.win(participant);
                 match.broadcast(MessagesLocale.PARKOUR_END, TagResolver.resolver(
-                        Placeholder.unparsed("player", participant.getNameColored()),
+                        TagResolver.resolver("player", match.getColoredNameResolver(participant)),
                         Placeholder.unparsed("time", participant.getTime().formatSecondsMillis())
                 ));
             }
@@ -938,7 +938,7 @@ public class MatchListener implements Listener {
                             CC.color(MessagesLocale.BED_BREAK_FOOTER.getString()), 20);
                     match.broadcast(
                             opponent.getColor().equals(ParticipantColor.RED) ? MessagesLocale.RED_BED_BROKEN_MESSAGE
-                                    : MessagesLocale.BLUE_BED_BROKEN_MESSAGE, Placeholder.parsed("player", participant.getNameColored()));
+                                    : MessagesLocale.BLUE_BED_BROKEN_MESSAGE, TagResolver.resolver("player", match.getColoredNameResolver(participant)));
                 } else {
                     event.setCancelled(true);
                     participant.sendMessage(MessagesLocale.CANT_BREAK_OWN_BED);

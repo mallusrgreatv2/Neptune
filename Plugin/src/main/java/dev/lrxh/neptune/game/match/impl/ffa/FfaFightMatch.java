@@ -18,11 +18,16 @@ import dev.lrxh.neptune.utils.CC;
 import dev.lrxh.neptune.utils.PlayerUtil;
 import lombok.Getter;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.Context;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 public class FfaFightMatch extends Match implements IFffaFightMatch {
     public final List<Participant> deadParticipants;
@@ -104,7 +109,7 @@ public class FfaFightMatch extends Match implements IFffaFightMatch {
     }
 
     public String getLoserName() {
-        return deadParticipants.stream().map(p -> p.getNameColored()).toList().toString();
+        return deadParticipants.stream().map(Participant::getNameColored).toList().toString();
     }
 
     private boolean isLastPlayerStanding() {
@@ -118,6 +123,19 @@ public class FfaFightMatch extends Match implements IFffaFightMatch {
             }
         }
         return null;
+    }
+
+    @Override
+    public BiFunction<ArgumentQueue, Context, Tag> getColoredNameResolver(Participant participant) {
+        return (ArgumentQueue args, Context context) -> {
+            Player receiver = context.targetAsType(Player.class);
+            Participant receiverParticipant = participant.getProfile().getMatch().getParticipant(receiver);
+            return Tag.inserting(CC.returnMessage(receiver,
+                    (receiverParticipant == null ? MessagesLocale.MATCH_SPECTATOR_TEAM_NAME :
+                            participant == receiverParticipant ? MessagesLocale.MATCH_OWN_TEAM_NAME :
+                                    MessagesLocale.MATCH_OPPONENT_TEAM_NAME).getString(),
+                    Placeholder.unparsed("name", participant.getName())));
+        };
     }
 
     @Override

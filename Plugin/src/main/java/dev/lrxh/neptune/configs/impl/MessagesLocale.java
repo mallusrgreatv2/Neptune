@@ -29,6 +29,9 @@ public enum MessagesLocale implements IDataAccessor {
                         "Missing argument for: <command>"),
     MATCH_YOU("MATCH.YOU", DataType.STRING, "You"),
     MATCH_OPPONENT_TEAM("MATCH.OPPONENT_TEAM", DataType.STRING, "Opponent Team"),
+    MATCH_OWN_TEAM_NAME("MATCH.TEAM_MEMBER_NAME.OWN", DataType.STRING, "&a<name>"),
+    MATCH_OPPONENT_TEAM_NAME("MATCH.TEAM_MEMBER_NAME.OPPONENT", DataType.STRING, "&c<name>"),
+    MATCH_SPECTATOR_TEAM_NAME("MATCH.TEAM_MEMBER_NAME.FOR_SPECTATORS", DataType.STRING, "&b<name>"),
     MATCH_DEATH_DISCONNECT("MATCH.DEATH.DISCONNECT", DataType.STRING_LIST, "<player> &7disconnected"),
     MATCH_DEATH_KILLED("MATCH.DEATH.KILLED", DataType.STRING_LIST, "<player> &7was killed by <killer>"),
     MATCH_DEATH_DIED("MATCH.DEATH.DIED", DataType.STRING_LIST, "<player> &7died"),
@@ -66,8 +69,8 @@ public enum MessagesLocale implements IDataAccessor {
     MATCH_WINNER_TITLE_HEADER("MATCH.WINNER.TITLE-HEADER", DataType.STRING, "&aVICTORY!"),
     MATCH_WINNER_TITLE_FOOTER("MATCH.WINNER.TITLE-FOOTER", DataType.STRING, "&a<player> &fwon the match!"),
 
-        MATCH_LOSER_TITLE_HEADER("MATCH.LOSER.TITLE-HEADER", DataType.STRING, "&cDEFEAT!"),
-        MATCH_LOSER_TITLE_FOOTER("MATCH.LOSER.TITLE-FOOTER", DataType.STRING, "&a<player> &fwon the match!"),
+    MATCH_LOSER_TITLE_HEADER("MATCH.LOSER.TITLE-HEADER", DataType.STRING, "&cDEFEAT!"),
+    MATCH_LOSER_TITLE_FOOTER("MATCH.LOSER.TITLE-FOOTER", DataType.STRING, "&a<player> &fwon the match!"),
 
     MATCH_COMMA("MATCH.COMMA", DataType.STRING, "&7, "),
     MATCH_END_DETAILS_SOLO("MATCH.END_DETAILS_MESSAGE.SOLO", DataType.STRING_LIST,

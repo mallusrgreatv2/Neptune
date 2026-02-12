@@ -30,13 +30,13 @@ import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.Context;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
@@ -46,6 +46,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 @AllArgsConstructor
@@ -308,16 +309,16 @@ public abstract class Match implements IMatch {
         player.sendHealthUpdate();
     }
     public void broadcast(MessagesLocale messagesLocale, TagResolver resolver) {
-        forEachParticipant(participant -> messagesLocale.send(participant.getPlayerUUID(), resolver));
-
-        forEachSpectator(player -> messagesLocale.send(player.getUniqueId(), resolver));
+        broadcast(messagesLocale.getString(), resolver);
+    }
+    public void broadcast(String message) {
+        broadcast(message, TagResolver.empty());
     }
 
-    @Override
-    public void broadcast(String message) {
-        forEachParticipant(participant -> PlayerUtil.sendMessage(participant.getPlayerUUID(), message));
+    public void broadcast(String message, TagResolver resolver) {
+        forEachParticipant(participant -> PlayerUtil.sendMessage(participant.getPlayerUUID(), message, resolver));
 
-        forEachSpectator(player -> PlayerUtil.sendMessage(player.getUniqueId(), message));
+        forEachSpectator(player -> PlayerUtil.sendMessage(player.getUniqueId(), message, resolver));
     }
 
     public void checkRules() {
@@ -413,18 +414,17 @@ public abstract class Match implements IMatch {
     public void sendDeathMessage(Participant deadParticipant) {
         String deathMessage = deadParticipant.getDeathMessage();
         DeathCause deathCause = deadParticipant.getDeathCause();
-
+        TagResolver.Builder resolver = TagResolver.builder()
+                .resolver(TagResolver.resolver("player", getColoredNameResolver(deadParticipant)));
+        if (deadParticipant.getLastAttacker() != null) resolver = resolver.resolver(TagResolver.resolver("killer", getColoredNameResolver(deadParticipant.getLastAttacker())));
         if (deathMessage.isEmpty() && deathCause != null) {
-            broadcast(
-                    deadParticipant.getDeathCause().getMessage(),
-                    TagResolver.resolver(
-                        Placeholder.unparsed("player", deadParticipant.getNameColored()),
-                        Placeholder.unparsed("killer", deadParticipant.getLastAttackerName())
-                    ));
+            broadcast(deadParticipant.getDeathCause().getMessage(), resolver.build());
         } else {
-            broadcast(deathMessage);
+            broadcast(deathMessage, resolver.build());
         }
     }
+
+    public abstract BiFunction<ArgumentQueue, Context, Tag> getColoredNameResolver(Participant participant);
 
     public void teleportToPositions() {
         for (Participant participant : participants) {

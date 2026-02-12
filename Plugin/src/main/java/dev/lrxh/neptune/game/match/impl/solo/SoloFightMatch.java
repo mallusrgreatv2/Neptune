@@ -4,6 +4,7 @@ import dev.lrxh.api.events.SoloMatchBedDestroyEvent;
 import dev.lrxh.api.match.ISoloFightMatch;
 import dev.lrxh.api.match.participant.IParticipant;
 import dev.lrxh.neptune.API;
+import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.impl.MessagesLocale;
 import dev.lrxh.neptune.configs.impl.SettingsLocale;
 import dev.lrxh.neptune.configs.impl.SoundsLocale;
@@ -31,15 +32,20 @@ import dev.lrxh.neptune.utils.PlayerUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.Context;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.function.BiFunction;
 
 @Getter
 @Setter
@@ -209,6 +215,22 @@ public class SoloFightMatch extends Match implements ISoloFightMatch {
     @Override
     public void sendTitle(Participant participant, TextComponent header, TextComponent footer, int duration) {
         participant.sendTitle(header, footer, duration);
+    }
+
+    @Override
+    public BiFunction<ArgumentQueue, Context, Tag> getColoredNameResolver(Participant participant) {
+        return (ArgumentQueue args, Context context) -> {
+            Player receiver = context.targetAsType(Player.class);
+            Participant receiverParticipant = participant.getProfile().getMatch().getParticipant(receiver);
+            MessagesLocale message;
+            if (receiverParticipant == null) message = MessagesLocale.MATCH_SPECTATOR_TEAM_NAME;
+            else if (participant == receiverParticipant) message = MessagesLocale.MATCH_OWN_TEAM_NAME;
+            else message = MessagesLocale.MATCH_OPPONENT_TEAM_NAME;
+            Neptune.get().getLogger().info("receiver: " + receiver.getName() + ", target:" + participant.getName() + ", message: " + message.getPath());
+            return Tag.inserting(CC.returnMessage(receiver,
+                    message.getString(),
+                    Placeholder.unparsed("name", participant.getName())));
+        };
     }
 
     @Override

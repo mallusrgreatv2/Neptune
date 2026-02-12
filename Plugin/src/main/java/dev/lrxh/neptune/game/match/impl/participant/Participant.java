@@ -259,14 +259,12 @@ public class Participant implements IParticipant {
             return "";
         }
 
-        return attackerProfile.getSettingData().getKillMessagePackage().getRandomMessage()
-                .replace("<player>", getNameColored())
-                .replace("<killer>", getLastAttackerName());
+        return attackerProfile.getSettingData().getKillMessagePackage().getRandomMessage();
     }
 
     public String getLastAttackerName() {
         return Optional.ofNullable(getLastAttacker())
-                .map(Participant::getNameColored)
+                .map(Participant::getName)
                 .orElse("");
     }
 
