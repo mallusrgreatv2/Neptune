@@ -552,15 +552,19 @@ public enum MenusLocale implements IDataAccessor {
         return ConfigService.get().getMenusConfig();
     }
     public void update() {
-        getConfigFile().getConfiguration().set(MATCH_LIST_ITEM_NAME.getPath(), 
+        MATCH_LIST_ITEM_NAME.set(
                 MATCH_LIST_ITEM_NAME.getString()
                         .replaceAll("<playerRed_name>", "<red-name>")
                         .replaceAll("<playerBlue_name>", "<blue-name>")
         );
-        getConfigFile().getConfiguration().set(STAT_LORE.getPath(),
+        STAT_LORE.set(
                 STAT_LORE.getStringList().stream().map(str ->
-                        str.replaceAll("<currentStreak>", "<current-win-streak>")
-                           .replaceAll("<bestStreak>", "<best-win-streak>")
+                        str
+                                .replaceAll("<currentStreak>", "<current-win-streak>")
+                                .replaceAll("<win_streak_current>", "<current-win-streak>")
+                                .replaceAll("<bestStreak>", "<best-win-streak>")
+                                .replaceAll("<win_streak_best>", "<best-win-streak>")
+                                .replaceAll("<kill_death_ratio>", "<kdr>")
                 ).toList()
         );
         getConfigFile().save();
