@@ -51,18 +51,18 @@
 ## Any Match
 
 | Plugin                                               | PlaceholderAPI                                           | Description                                                |
-| ---------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------- |
-| \<red-bed-status><sup style="color: red">\*\*</sup>  | %neptune_red-bed-broken%<sup style="color: red">$</sup>  | The ping of the player in the red team                     |
-| \<blue-bed-status><sup style="color: red">\*\*</sup> | %neptune_blue-bed-broken%<sup style="color: red">$</sup> | The ping of the player in the blue team                    |
+|------------------------------------------------------| -------------------------------------------------------- | ---------------------------------------------------------- |
+| \<red-bed-broken><sup style="color: red">\*\*</sup>  | %neptune_red-bed-broken%<sup style="color: red">$</sup>  | The ping of the player in the red team                     |
+| \<blue-bed-broken><sup style="color: red">\*\*</sup> | %neptune_blue-bed-broken%<sup style="color: red">$</sup> | The ping of the player in the blue team                    |
 | \<time>                                              | %neptune_time%                                           | The time the match has been active for                     |
-| \<max-points>                                         | %neptune_max-points%                                     | The total number of rounds in a match                      |
+| \<max-points>                                        | %neptune_max-points%                                     | The total number of rounds in a match                      |
 | \<kit>                                               | %neptune_kit%                                            | The display name of the kit the match is being played with |
 | \<arena>                                             | %neptune_arena%                                          | The display name of the arena of the match                 |
 
 ## Solo Match
 
 | Plugin                                                   | PlaceholderAPI                                               | Description                                                          |
-| -------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------- |
+|----------------------------------------------------------| ------------------------------------------------------------ | -------------------------------------------------------------------- |
 | \<opponent>                                              | %neptune_opponent%                                           | The name of the opponent                                             |
 | \<opponent-ping>                                         | %neptune_opponent-ping%                                      | The ping of the opponent in milliseconds                             |
 | \<red-hits>                                              | None                                                         | Hits of the red player                                               |
@@ -71,19 +71,19 @@
 | \<blue-combo>                                            | None                                                         | Combo of the blue player                                             |
 | \<red-points>                                            | None                                                         | Points of the red player                                             |
 | \<blue-points>                                           | None                                                         | Points of the blue player                                            |
-| \<red-hit-difference>                                        | None                                                         | Hit difference of the red player                                     |
-| \<blue-hit-difference>                                       | None                                                         | Hit difference of the blue player                                    |
+| \<red-hit-difference>                                    | None                                                         | Hit difference of the red player                                     |
+| \<blue-hit-difference>                                   | None                                                         | Hit difference of the blue player                                    |
 | \<combo>                                                 | %neptune_combo%                                              | The combo the player is holding against the opponent                 |
 | \<opponent-combo>                                        | %neptune_opponent-combo%                                     | The combo the opponent is holding against the player                 |
 | \<hits>                                                  | %neptune_hits%                                               | The amount of times the player has hit the opponent                  |
 | \<opponent-hits>                                         | %neptune_opponent-hits%                                      | The amount of times the opponent has hit the player                  |
-| \<hit-difference>                                            | %neptune_difference%                                         | The difference in amount of hits between the player and the opponent |
-| \<red-name>                                        | %neptune_player-red-name%                                    | The name of the player in the red team                               |
-| \<blue-name>                                       | %neptune_player-blue-name%                                   | The name of the player in the blue team                              |
-| \<red-ping>                                        | %neptune_player-red-ping%                                    | The ping of the player in the red team                               |
-| \<blue-ping>                                       | %neptune_player-blue-ping%                                   | The ping of the player in the blue team                              |
-| \<bed-status><sup style="color: red">\*\*</sup>          | %neptune_bed-broken%<sup style="color: red">$</sup>          | Whether the player's bed is broken                                   |
-| \<opponent-bed-status><sup style="color: red">\*\*</sup> | %neptune_opponent-bed-broken%<sup style="color: red">$</sup> | Whether the opponent's bed is broken                                 |
+| \<hit-difference>                                        | %neptune_difference%                                         | The difference in amount of hits between the player and the opponent |
+| \<red-name>                                              | %neptune_player-red-name%                                    | The name of the player in the red team                               |
+| \<blue-name>                                             | %neptune_player-blue-name%                                   | The name of the player in the blue team                              |
+| \<red-ping>                                              | %neptune_player-red-ping%                                    | The ping of the player in the red team                               |
+| \<blue-ping>                                             | %neptune_player-blue-ping%                                   | The ping of the player in the blue team                              |
+| \<bed-broken><sup style="color: red">\*\*</sup>          | %neptune_bed-broken%<sup style="color: red">$</sup>          | Whether the player's bed is broken                                   |
+| \<opponent-bed-broken><sup style="color: red">\*\*</sup> | %neptune_opponent-bed-broken%<sup style="color: red">$</sup> | Whether the opponent's bed is broken                                 |
 | \<points>                                                | %neptune_points%                                             | The number of rounds won by the player's team                        |
 | \<opponent-points>                                       | %neptune_opponent-points%                                    | The number of rounds won by the opponent's team                      |
 
@@ -92,17 +92,17 @@
 ## Team Match
 
 | Plugin                                                        | PlaceholderAPI                                               | Description                                      |
-| ------------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------ |
+|---------------------------------------------------------------| ------------------------------------------------------------ | ------------------------------------------------ |
 | \<alive>                                                      | %neptune_alive%                                              | The number of players alive on the player's team |
 | \<max>                                                        | %neptune_max%                                                | The total number of players on the player's team |
 | \<alive-opponent>                                             | %neptune_opponent-alive%                                     | The number of players alive on the opposing team |
 | \<max-opponent>                                               | %neptune_opponent-max%                                       | The total number of players on the opposing team |
-| \<team-bed-status><sup style="color: red">\*\*</sup>          | %neptune_bed-broken%<sup style="color: red">$</sup>          | Whether the player team's bed is broken          |
-| \<opponent-team-bed-status><sup style="color: red">\*\*</sup> | %neptune_opponent-bed-broken%<sup style="color: red">$</sup> | Whether the opponent team's bed is broken        |
+| \<team-bed-broken><sup style="color: red">\*\*</sup>          | %neptune_bed-broken%<sup style="color: red">$</sup>          | Whether the player team's bed is broken          |
+| \<opponent-team-bed-broken><sup style="color: red">\*\*</sup> | %neptune_opponent-bed-broken%<sup style="color: red">$</sup> | Whether the opponent team's bed is broken        |
 | \<red-alive>                                                  | %neptune_red-alive%                                          | The number of players alive on the red team      |
 | \<blue-alive>                                                 | %neptune_blue-alive%                                         | The number of players alive on the blue team     |
-| \<red-total>                                                    | %neptune_red-max%                                            | The total number of players on the red team      |
-| \<blue-total>                                                   | %neptune_blue-max%                                           | The total number of players on the blue team     |
+| \<red-total>                                                  | %neptune_red-max%                                            | The total number of players on the red team      |
+| \<blue-total>                                                 | %neptune_blue-max%                                           | The total number of players on the blue team     |
 | \<points>                                                     | %neptune_points%                                             | The number of rounds won by the player's team    |
 | \<opponent-points>                                            | %neptune_opponent-points%                                    | The number of rounds won by the opponent's team  |
 

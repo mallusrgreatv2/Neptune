@@ -563,7 +563,7 @@ public class MatchListener implements Listener {
         if (event.getDamager() instanceof Player attacker && event.getEntity() instanceof Player player) {
             Profile attackerProfile = API.getProfile(attacker.getUniqueId());
             Profile profile = API.getProfile(player);
-            if (profile == null)
+            if (profile == null || attackerProfile == null)
                 return;
 
             if (profile.getState().equals(ProfileState.IN_CUSTOM)) {
