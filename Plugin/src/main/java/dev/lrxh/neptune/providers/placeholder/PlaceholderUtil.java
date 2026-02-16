@@ -66,7 +66,7 @@ public class PlaceholderUtil {
             kit = queue.getKit();
         else if (profile.hasState(ProfileState.IN_KIT_EDITOR))
             kit = profile.getGameData().getKitEditor();
-        else if (profile.hasState(ProfileState.IN_GAME) && match != null)
+        else if (profile.hasState(ProfileState.IN_GAME, ProfileState.IN_SPECTATOR) && match != null)
             kit = match.getKit();
         if (kit != null) {
             KitData kitData = profile.getGameData().get(kit);
@@ -105,7 +105,7 @@ public class PlaceholderUtil {
                 Placeholder.unparsed("round", String.valueOf(match.getCurrentRound())),
                 Placeholder.unparsed("time", match.getTime().formatTime())
             );
-            if (kit.is(KitRule.BED_WARS)) {
+            if (kit.is(KitRule.BED_WARS) && participant != null) {
                 placeholders = TagResolver.resolver(placeholders,
                     Placeholder.unparsed("bed-broken", participant.isBedBroken() ? "&a✔" : "&c1"),
                     Placeholder.unparsed("opponent-bed-broken", participant.getOpponent().isBedBroken() ? "&a✔" : "&c1")
@@ -116,27 +116,32 @@ public class PlaceholderUtil {
                 Participant blue = sfm.getBlueParticipant();
                 Participant opponent = participant.getOpponent();
                 if (opponent.getPlayer() == null) return placeholders;
+                if (participant != null) {
+                    Participant opponent = participant.getOpponent();
+                    placeholders = TagResolver.resolver(placeholders,
+                            Placeholder.parsed("bed-broken", participant.getBedMessage()),
+                            Placeholder.parsed("opponent-bed-broken", opponent.getBedMessage()),
+                            Placeholder.parsed("red-bed-broken", red.getBedMessage()),
+                            Placeholder.parsed("blue-bed-broken", blue.getBedMessage()),
+                            Placeholder.parsed("opponent-combo", opponent.getComboMessage()),
+                            Placeholder.unparsed("combo", participant.getComboMessage()),
+                            Placeholder.unparsed("longest-combo", String.valueOf(participant.getLongestCombo())),
+                            Placeholder.unparsed("hits", String.valueOf(participant.getHits())),
+                            Placeholder.unparsed("hit-difference", String.valueOf(participant.getHitsDifference(opponent))),
+                            Placeholder.unparsed("points", String.valueOf(participant.getPoints())),
+                            Placeholder.unparsed("opponent", String.valueOf(opponent.getName())),
+                            Placeholder.unparsed("opponent-longest-combo", String.valueOf(opponent.getLongestCombo())),
+                            Placeholder.unparsed("opponent-hits", String.valueOf(opponent.getHits())),
+                            Placeholder.unparsed("opponent-hit-difference", String.valueOf(opponent.getHitsDifference(participant))),
+                            Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints())),
+                            Placeholder.unparsed("opponent-ping", String.valueOf(opponent.getPlayer().getPing()))
+                    );
+                }
                 placeholders = TagResolver.resolver(placeholders,
-                    Placeholder.parsed("bed-status", participant.getBedMessage()),
-                    Placeholder.parsed("opponent-bed-status", opponent.getBedMessage()),
-                    Placeholder.parsed("red-bed-status", red.getBedMessage()),
-                    Placeholder.parsed("blue-bed-status", blue.getBedMessage()),
-                    Placeholder.parsed("opponent-combo", opponent.getComboMessage()),
                     Placeholder.parsed("red-combo", red.getComboMessage()),
                     Placeholder.parsed("blue-combo", blue.getComboMessage()),
                     Placeholder.parsed("red-bed-broken", red.getBedMessage()),
                     Placeholder.parsed("blue-bed-broken", blue.getBedMessage()),
-                    Placeholder.unparsed("combo", participant.getComboMessage()),
-                    Placeholder.unparsed("longest-combo", String.valueOf(participant.getLongestCombo())),
-                    Placeholder.unparsed("hits", String.valueOf(participant.getHits())),
-                    Placeholder.unparsed("hit-difference", String.valueOf(participant.getHitsDifference(opponent))),
-                    Placeholder.unparsed("points", String.valueOf(participant.getPoints())),
-                    Placeholder.unparsed("opponent", String.valueOf(opponent.getName())),
-                    Placeholder.unparsed("opponent-longest-combo", String.valueOf(opponent.getLongestCombo())),
-                    Placeholder.unparsed("opponent-hits", String.valueOf(opponent.getHits())),
-                    Placeholder.unparsed("opponent-hit-difference", String.valueOf(opponent.getHitsDifference(participant))),
-                    Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints())),
-                    Placeholder.unparsed("opponent-ping", String.valueOf(opponent.getPlayer().getPing())),
                     Placeholder.unparsed("red-name", red.getName()),
                     Placeholder.unparsed("red-longest-combo", String.valueOf(red.getLongestCombo())),
                     Placeholder.unparsed("red-hits", String.valueOf(red.getHits())),
@@ -152,25 +157,29 @@ public class PlaceholderUtil {
                 );
             }
             if (match instanceof TeamFightMatch tfm)  {
-                MatchTeam team = tfm.getParticipantTeam(participant);
-                MatchTeam opponent = team.getOpponentTeam();
                 MatchTeam red = tfm.getTeamA();
                 MatchTeam blue = tfm.getTeamB();
+                if (participant != null) {
+                    MatchTeam team = tfm.getParticipantTeam(participant);
+                    MatchTeam opponent = team.getOpponentTeam();
+                    placeholders = TagResolver.resolver(placeholders,
+                            Placeholder.parsed("team-bed-broken", team.getBedMessage()),
+                            Placeholder.parsed("opponent-bed-broken", opponent.getBedMessage()),
+                            Placeholder.unparsed("team-players", team.getTeamNames()),
+                            Placeholder.unparsed("team-alive", String.valueOf(team.getAliveParticipants())),
+                            Placeholder.unparsed("team-dead", String.valueOf(team.getDeadParticipants().size())),
+                            Placeholder.unparsed("team-total", String.valueOf(team.getAliveParticipants() + team.getDeadParticipants().size())),
+                            Placeholder.unparsed("team-points", String.valueOf(team.getPoints())),
+                            Placeholder.unparsed("opponent-alive", String.valueOf(opponent.getAliveParticipants())),
+                            Placeholder.unparsed("opponent-dead", String.valueOf(opponent.getDeadParticipants().size())),
+                            Placeholder.unparsed("opponent-total", String.valueOf(opponent.getAliveParticipants() + opponent.getDeadParticipants().size())),
+                            Placeholder.unparsed("opponent-players", opponent.getTeamNames()),
+                            Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints()))
+                    );
+                }
                 placeholders = TagResolver.resolver(placeholders,
-                    Placeholder.parsed("team-bed-status", team.getBedMessage()),
-                    Placeholder.parsed("opponent-bed-status", opponent.getBedMessage()),
-                    Placeholder.parsed("red-bed-status", red.getBedMessage()),
-                    Placeholder.parsed("blue-bed-status", blue.getBedMessage()),
-                    Placeholder.unparsed("team-players", team.getTeamNames()),
-                    Placeholder.unparsed("team-alive", String.valueOf(team.getAliveParticipants())),
-                    Placeholder.unparsed("team-dead", String.valueOf(team.getDeadParticipants().size())),
-                    Placeholder.unparsed("team-total", String.valueOf(team.getAliveParticipants() + team.getDeadParticipants().size())),
-                    Placeholder.unparsed("team-points", String.valueOf(team.getPoints())),
-                    Placeholder.unparsed("opponent-alive", String.valueOf(opponent.getAliveParticipants())),
-                    Placeholder.unparsed("opponent-dead", String.valueOf(opponent.getDeadParticipants().size())),
-                    Placeholder.unparsed("opponent-total", String.valueOf(opponent.getAliveParticipants() + opponent.getDeadParticipants().size())),
-                    Placeholder.unparsed("opponent-players", opponent.getTeamNames()),
-                    Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints())),
+                    Placeholder.parsed("red-bed-broken", red.getBedMessage()),
+                    Placeholder.parsed("blue-bed-broken", blue.getBedMessage()),
                     Placeholder.unparsed("red-players", red.getTeamNames()),
                     Placeholder.unparsed("red-alive", String.valueOf(red.getAliveParticipants())),
                     Placeholder.unparsed("red-dead", String.valueOf(red.getDeadParticipants().size())),
