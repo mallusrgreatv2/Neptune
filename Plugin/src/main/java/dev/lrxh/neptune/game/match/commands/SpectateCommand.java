@@ -5,6 +5,7 @@ import com.jonahseguin.drink.annotation.Flag;
 import com.jonahseguin.drink.annotation.Sender;
 import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.configs.impl.MessagesLocale;
+import dev.lrxh.neptune.game.match.menu.MatchListMenu;
 import dev.lrxh.neptune.profile.data.ProfileState;
 import dev.lrxh.neptune.profile.impl.Profile;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -12,7 +13,15 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.entity.Player;
 
 public class SpectateCommand {
-
+    @Command(name = "menu", desc = "Open the spectator menu")
+    public void spectate(@Sender Player player) {
+        Profile profile = API.getProfile(player);
+        if (!profile.hasState(ProfileState.IN_LOBBY)) {
+            MessagesLocale.CANT_DO_THIS_NOW.send(player);
+            return;
+        }
+        new MatchListMenu().open(player);
+    }
     @Command(name = "", desc = "", usage = "<player> [-s: silent]")
     public void spectate(@Sender Player player, Player target, @Flag('s') boolean silent) {
         if (silent && !player.hasPermission("neptune.silent-spectate")) {

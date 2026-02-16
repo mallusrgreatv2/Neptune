@@ -74,7 +74,7 @@ public enum MenusLocale implements IDataAccessor {
     MATCH_LIST_TITLE("MATCH.LIST.TITLE", DataType.STRING, "&7Select Match"),
     MATCH_LIST_SIZE("MATCH_LIST.SIZE", DataType.INT, "36"),
     MATCH_LIST_STARTING_SLOT("MATCH_LIST.STARTING-SLOT", DataType.INT, "10"),
-    MATCH_LIST_FILTER("MATCH_LIST.FILTER-TYPE", "FILL, BORDER, NONE", DataType.STRING, "FILL"),
+    MATCH_LIST_FILTER("MATCH_LIST.FILTER-TYPE", "FILL, BORDER, NONE", DataType.STRING, "BORDER"),
     MATCH_LIST_ITEM_NAME("MATCH_LIST.ITEM.NAME", DataType.STRING,
             "&c<red-name> &7vs &9<blue-name>"),
     MATCH_LIST_ITEM_LORE("MATCH_LIST.ITEM.LORE", DataType.STRING_LIST,
@@ -597,6 +597,7 @@ public enum MenusLocale implements IDataAccessor {
                                 .replaceAll("<kill_death_ratio>", "<kdr>")
                 ).toList()
         );
+        if (MATCH_LIST_STARTING_SLOT.getInt() == 10 && MATCH_LIST_FILTER.getString().equals("FILTER")) MATCH_LIST_FILTER.set("BOOLEAN");
         getConfigFile().save();
     }
 }

@@ -27,6 +27,7 @@ public class MatchListMenu extends Menu {
 
         for (Match match : MatchService.get().matches) {
             if (match instanceof SoloFightMatch SoloFightMatch) {
+                if (i % 9 == 8 && MenusLocale.MATCH_LIST_FILTER.getString().equals("BORDER")) i += 2;
                 buttons.add(new MatchSpectateButton(i++, SoloFightMatch));
             }
         }
