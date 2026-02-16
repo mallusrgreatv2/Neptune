@@ -597,7 +597,7 @@ public enum MenusLocale implements IDataAccessor {
                                 .replaceAll("<kill_death_ratio>", "<kdr>")
                 ).toList()
         );
-        if (MATCH_LIST_STARTING_SLOT.getInt() == 10 && MATCH_LIST_FILTER.getString().equals("FILTER")) MATCH_LIST_FILTER.set("BOOLEAN");
+        if (MATCH_LIST_STARTING_SLOT.getInt() == 10 && MATCH_LIST_FILTER.getString().equals("FILTER")) MATCH_LIST_FILTER.set("BORDER");
         getConfigFile().save();
     }
 }
