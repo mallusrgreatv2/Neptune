@@ -108,8 +108,8 @@ public enum ScoreboardLocale implements IDataAccessor {
             "&bFighting: &f<opponent>",
             " ",
             "&bBeds:",
-            "&a Your Bed: <bed-status>",
-            "&c Opponent Bed: <opponent-bed-status>",
+            "&a Your Bed: <bed-broken>",
+            "&c Opponent Bed: <opponent-bed-broken>",
             " ",
             "&aYour Ping: &f<ping>ms",
             "&cTheir Ping: &f<opponent-ping>ms",
@@ -124,8 +124,8 @@ public enum ScoreboardLocale implements IDataAccessor {
             "&c Enemy Team: <opponent-alive>&f/&c<opponent-total>",
             " ",
             "&bBeds:",
-            "&a Your Bed: <team-bed-status>",
-            "&c Enemy Bed: <opponent-bed-status>",
+            "&a Your Bed: <team-bed-broken>",
+            "&c Enemy Bed: <opponent-bed-broken>",
             " ",
             "&bserver.net",
             "&7&m--------------------"),
@@ -152,8 +152,8 @@ public enum ScoreboardLocale implements IDataAccessor {
             "&bKit: &f<kit>",
             "&bArena: &f<arena>",
             "",
-            "&a Red Bed: <red-bed-status>",
-            "&9 Blue Bed: <blue-bed-status>",
+            "&a Red Bed: <red-bed-broken>",
+            "&9 Blue Bed: <blue-bed-broken>",
             " ",
             "&bserver.net",
             "&7&m--------------------"),
@@ -254,7 +254,25 @@ public enum ScoreboardLocale implements IDataAccessor {
                         .replaceAll("<alive-opponent>", "<opponent-alive>")
                         .replaceAll("<max-opponent>", "<opponent-total>")
                         .replaceAll("<points>", "<team-points>")
-                        .replaceAll("<opponent-team-bed-status>", "<opponent-bed-status>")
+                        .replaceAll("<opponent-team-bed-status>", "<opponent-bed-broken>")
+                        .replaceAll("<opponent-bed-status>", "<opponent-bed-broken>")
+                        .replaceAll("<team-bed-status>", "<team-bed-broken>")
+        ).toList());
+        IN_SPECTATOR_BEDWARS.set(IN_SPECTATOR_BEDWARS.getStringList().stream().map(str ->
+                str
+                        .replaceAll("<red-bed-status>", "<red-bed-broken>")
+                        .replaceAll("<blue-bed-status>", "<blue-bed-broken>")
+        ).toList());
+        IN_GAME_BEDWARS.set(IN_GAME_BEDWARS.getStringList().stream().map(str ->
+                str
+                        .replaceAll("<bed-status>", "<bed-broken>")
+                        .replaceAll("<opponent-bed-status>", "<opponent-bed-broken>")
+        ).toList());
+        IN_GAME_BEDWARS_TEAM.set(IN_GAME_BEDWARS_TEAM.getStringList().stream().map(str ->
+                str
+                        .replaceAll("<team-bed-status>", "<team-bed-broken>")
+                        .replaceAll("<opponent-bed-status>", "<opponent-bed-broken>")
+                        .replaceAll("<opponent-team-bed-status>", "<opponent-bed-broken>")
         ).toList());
         getConfigFile().save();
     }

@@ -39,6 +39,7 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.vehicle.VehicleDamageEvent;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -431,29 +432,31 @@ public class MatchListener implements Listener {
 
     @EventHandler
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player attacker && event.getEntity() instanceof Player) {
-            Profile profile = API.getProfile(attacker);
-            if (profile == null)
-                return;
+        if (!(event.getDamager() instanceof Player attacker)) return;
+        Profile profile = API.getProfile(attacker);
+        if (profile == null || profile.hasState(ProfileState.IN_SPECTATOR)) {
+            event.setCancelled(true);
+            return;
+        }
+        if (profile.getState().equals(ProfileState.IN_CUSTOM)) return;
+        if (!isPlayerInMatch(profile)) {
+            event.setCancelled(true);
+            return;
+        }
 
-            if (profile.getState().equals(ProfileState.IN_CUSTOM)) {
-                return;
-            }
-
-            // Check if attacker is in match
-            if (!isPlayerInMatch(profile)) {
+        Match match = profile.getMatch();
+        if (match != null && event.getEntity() instanceof Player) {
+            if (match.getKit().is(KitRule.PARKOUR)) {
                 event.setCancelled(true);
-                return;
-            }
-
-            Match match = profile.getMatch();
-
-            if (match != null) {
-                if (match.getKit().is(KitRule.PARKOUR)) {
-                    event.setCancelled(true);
-                }
             }
         }
+    }
+
+    @EventHandler
+    public void vehicleDamage(VehicleDamageEvent event) {
+        if (!(event.getAttacker() instanceof Player player)) return;
+        Profile profile = API.getProfile(player);
+        if (!profile.hasState(ProfileState.IN_GAME) && !profile.hasState(ProfileState.IN_CUSTOM)) event.setCancelled(true);
     }
 
     @EventHandler
@@ -563,7 +566,7 @@ public class MatchListener implements Listener {
         if (event.getDamager() instanceof Player attacker && event.getEntity() instanceof Player player) {
             Profile attackerProfile = API.getProfile(attacker.getUniqueId());
             Profile profile = API.getProfile(player);
-            if (profile == null)
+            if (profile == null || attackerProfile == null)
                 return;
 
             if (profile.getState().equals(ProfileState.IN_CUSTOM)) {
