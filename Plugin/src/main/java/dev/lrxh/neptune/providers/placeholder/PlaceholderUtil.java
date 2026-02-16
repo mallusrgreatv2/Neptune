@@ -114,8 +114,6 @@ public class PlaceholderUtil {
             if (match instanceof SoloFightMatch sfm) {
                 Participant red = sfm.getRedParticipant();
                 Participant blue = sfm.getBlueParticipant();
-                Participant opponent = participant.getOpponent();
-                if (opponent.getPlayer() == null) return placeholders;
                 if (participant != null) {
                     Participant opponent = participant.getOpponent();
                     placeholders = TagResolver.resolver(placeholders,
@@ -133,9 +131,10 @@ public class PlaceholderUtil {
                             Placeholder.unparsed("opponent-longest-combo", String.valueOf(opponent.getLongestCombo())),
                             Placeholder.unparsed("opponent-hits", String.valueOf(opponent.getHits())),
                             Placeholder.unparsed("opponent-hit-difference", String.valueOf(opponent.getHitsDifference(participant))),
-                            Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints())),
-                            Placeholder.unparsed("opponent-ping", String.valueOf(opponent.getPlayer().getPing()))
+                            Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints()))
                     );
+                    if (opponent.getPlayer() != null) placeholders = TagResolver.resolver(placeholders,
+                            Placeholder.unparsed("opponent-ping", String.valueOf(opponent.getPlayer().getPing())));
                 }
                 placeholders = TagResolver.resolver(placeholders,
                     Placeholder.parsed("red-combo", red.getComboMessage()),
@@ -155,6 +154,10 @@ public class PlaceholderUtil {
                     Placeholder.unparsed("blue-points", String.valueOf(blue.getPoints())),
                     Placeholder.unparsed("blue-ping", String.valueOf(blue.getPlayer().getPing()))
                 );
+                if (red.getPlayer() != null) placeholders = TagResolver.resolver(placeholders,
+                        Placeholder.unparsed("red-ping", String.valueOf(red.getPlayer().getPing())));
+                if (blue.getPlayer() != null) placeholders = TagResolver.resolver(placeholders,
+                        Placeholder.unparsed("blue-ping", String.valueOf(blue.getPlayer().getPing())));
             }
             if (match instanceof TeamFightMatch tfm)  {
                 MatchTeam red = tfm.getTeamA();
