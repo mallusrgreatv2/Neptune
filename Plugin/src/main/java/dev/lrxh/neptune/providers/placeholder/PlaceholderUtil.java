@@ -32,10 +32,13 @@ public class PlaceholderUtil {
         TagResolver placeholders = TagResolver.resolver(
             Placeholder.unparsed("online", String.valueOf(Bukkit.getServer().getOnlinePlayers().size())),
             Placeholder.unparsed("queued", String.valueOf(QueueService.get().getQueueSize())),
-            Placeholder.unparsed("in-match", String.valueOf(MatchService.get().matches.size())),
-            Placeholder.unparsed("player", player.getName()),
-            Placeholder.unparsed("ping", String.valueOf((PlayerUtil.getPing(player))))
+            Placeholder.unparsed("in-match", String.valueOf(MatchService.get().matches.size()))
         );
+        if (player != null) placeholders = TagResolver.resolver(placeholders,
+                Placeholder.unparsed("player", player.getName()),
+                Placeholder.unparsed("ping", String.valueOf((PlayerUtil.getPing(player))))
+        );
+        else return placeholders;
         Profile profile = API.getProfile(player);
         if (profile == null) return placeholders;
         GlobalStats globalStats = profile.getGameData().getGlobalStats();
@@ -112,6 +115,7 @@ public class PlaceholderUtil {
                 Participant red = sfm.getRedParticipant();
                 Participant blue = sfm.getBlueParticipant();
                 Participant opponent = participant.getOpponent();
+                if (opponent.getPlayer() == null) return placeholders;
                 placeholders = TagResolver.resolver(placeholders,
                     Placeholder.parsed("bed-status", participant.getBedMessage()),
                     Placeholder.parsed("opponent-bed-status", opponent.getBedMessage()),

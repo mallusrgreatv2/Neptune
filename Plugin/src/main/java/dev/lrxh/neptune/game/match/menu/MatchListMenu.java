@@ -1,5 +1,6 @@
 package dev.lrxh.neptune.game.match.menu;
 
+import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.impl.MenusLocale;
 import dev.lrxh.neptune.game.match.Match;
 import dev.lrxh.neptune.game.match.MatchService;
@@ -29,9 +30,8 @@ public class MatchListMenu extends PaginatedMenu {
             if (match instanceof SoloFightMatch SoloFightMatch) {
                 int row = i / 9;
                 int col = i % 9;
-                if (col == 0 && isBorder) i++;
                 if (col == 8 && isBorder) i += 2;
-                if ((row == 0 || row == rows - 1) && isBorder) i += 9;
+                if (row == rows - 1 && isBorder) i += 9;
                 buttons.add(new MatchSpectateButton(i++, SoloFightMatch));
             }
         }
