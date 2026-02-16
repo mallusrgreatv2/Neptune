@@ -19,12 +19,6 @@ public class MatchListMenu extends PaginatedMenu {
         super(MenusLocale.MATCH_LIST_TITLE.getString(), MenusLocale.MATCH_LIST_SIZE.getInt(),
                 Filter.valueOf(MenusLocale.MATCH_LIST_FILTER.getString()));
     }
-
-    @Override
-    public int getMaxItemsPerPage() {
-        return super.getMaxItemsPerPage();
-    }
-
     @Override
     public List<Button> getAllPagesButtons(Player player) {
         List<Button> buttons = new ArrayList<>();
