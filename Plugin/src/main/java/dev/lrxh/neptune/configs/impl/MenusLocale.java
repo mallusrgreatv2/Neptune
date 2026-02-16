@@ -598,6 +598,7 @@ public enum MenusLocale implements IDataAccessor {
                 ).toList()
         );
         if (MATCH_LIST_STARTING_SLOT.getInt() == 10 && MATCH_LIST_FILTER.getString().equals("FILTER")) MATCH_LIST_FILTER.set("BORDER");
+        if (MATCH_LIST_STARTING_SLOT.getInt() == 10) MATCH_LIST_STARTING_SLOT.set("1");
         getConfigFile().save();
     }
 }

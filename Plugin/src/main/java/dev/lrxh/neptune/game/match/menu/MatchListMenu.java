@@ -7,27 +7,37 @@ import dev.lrxh.neptune.game.match.impl.solo.SoloFightMatch;
 import dev.lrxh.neptune.game.match.menu.button.MatchSpectateButton;
 import dev.lrxh.neptune.utils.menu.Button;
 import dev.lrxh.neptune.utils.menu.Filter;
-import dev.lrxh.neptune.utils.menu.Menu;
+import dev.lrxh.neptune.utils.menu.PaginatedMenu;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchListMenu extends Menu {
-
+public class MatchListMenu extends PaginatedMenu {
+    private final int size = MenusLocale.MATCH_LIST_SIZE.getInt();
     public MatchListMenu() {
         super(MenusLocale.MATCH_LIST_TITLE.getString(), MenusLocale.MATCH_LIST_SIZE.getInt(),
                 Filter.valueOf(MenusLocale.MATCH_LIST_FILTER.getString()));
     }
 
     @Override
-    public List<Button> getButtons(Player player) {
+    public int getMaxItemsPerPage() {
+        return super.getMaxItemsPerPage();
+    }
+
+    @Override
+    public List<Button> getAllPagesButtons(Player player) {
         List<Button> buttons = new ArrayList<>();
         int i = MenusLocale.MATCH_LIST_STARTING_SLOT.getInt();
-
+        int rows = size / 9;
+        boolean isBorder = MenusLocale.MATCH_LIST_FILTER.getString().equals("BORDER");
         for (Match match : MatchService.get().matches) {
             if (match instanceof SoloFightMatch SoloFightMatch) {
-                if (i % 9 == 8 && MenusLocale.MATCH_LIST_FILTER.getString().equals("BORDER")) i += 2;
+                int row = i / 9;
+                int col = i % 9;
+                if (col == 0 && isBorder) i++;
+                if (col == 8 && isBorder) i += 2;
+                if ((row == 0 || row == rows - 1) && isBorder) i += 9;
                 buttons.add(new MatchSpectateButton(i++, SoloFightMatch));
             }
         }
