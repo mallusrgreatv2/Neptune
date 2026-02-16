@@ -29,12 +29,11 @@ public class MatchSpectateButton extends Button {
     public ItemStack getItemStack(Player player) {
         return new ItemBuilder(match.getKit().getIcon())
                 .name(MenusLocale.MATCH_LIST_ITEM_NAME.getString()
-                        .replace("<playerRed_name>", match.getParticipantA().getNameUnColored())
-                        .replace("<playerBlue_name>", match.getParticipantB().getNameUnColored()))
-                .componentLore(ItemUtils.getLore(MenusLocale.MATCH_LIST_ITEM_LORE.getStringList()), TagResolver.resolver(
+                        .replace("<red-name>", match.getParticipantA().getNameUnColored())
+                        .replace("<blue-name>", match.getParticipantB().getNameUnColored()))
+                .componentLore(ItemUtils.getLore(MenusLocale.MATCH_LIST_ITEM_LORE.getStringList(), TagResolver.resolver(
                         Placeholder.parsed("arena", match.getArena().getDisplayName()),
-                        Placeholder.parsed("kit", match.getKit().getDisplayName())), player)
-
+                        Placeholder.parsed("kit", match.getKit().getDisplayName()))), player)
                 .build();
     }
 }

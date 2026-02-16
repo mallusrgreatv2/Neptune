@@ -7,7 +7,6 @@ import dev.lrxh.neptune.feature.queue.QueueService;
 import dev.lrxh.neptune.profile.impl.Profile;
 import org.bukkit.entity.Player;
 
-import java.util.IdentityHashMap;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
