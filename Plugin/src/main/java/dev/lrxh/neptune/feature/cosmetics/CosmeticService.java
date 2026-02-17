@@ -5,10 +5,12 @@ import dev.lrxh.api.features.cosmetics.ICosmeticService;
 import dev.lrxh.neptune.configs.ConfigService;
 import dev.lrxh.neptune.feature.cosmetics.impl.Cosmetic;
 import dev.lrxh.neptune.feature.cosmetics.impl.CosmeticPackage;
-import dev.lrxh.neptune.feature.cosmetics.impl.armortrims.ArmorTrimCosmetic;
-import dev.lrxh.neptune.feature.cosmetics.impl.armortrims.ArmorTrimPackage;
-import dev.lrxh.neptune.feature.cosmetics.impl.killmessage.KillMessageCosmetic;
-import dev.lrxh.neptune.feature.cosmetics.impl.killmessage.KillMessagePackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims.ArmorTrimCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims.ArmorTrimPackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage.KillMessageCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage.KillMessagePackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.shieldpatterns.ShieldPatternCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.shieldpatterns.ShieldPatternPackage;
 import dev.lrxh.neptune.providers.manager.IService;
 import dev.lrxh.neptune.utils.ConfigFile;
 
@@ -31,11 +33,12 @@ public class CosmeticService extends IService implements ICosmeticService {
     public void load() {
         KillMessageCosmetic.get().load();
         ArmorTrimCosmetic.get().load();
+        ShieldPatternCosmetic.get().load();
     }
 
     @Override
     public void save() {
-
+        ShieldPatternCosmetic.get().getConfigFile().save();
     }
 
     public void registerCosmetic(ICosmetic cosmetic) {
@@ -50,6 +53,9 @@ public class CosmeticService extends IService implements ICosmeticService {
     }
     public Map<String, ArmorTrimPackage> getArmorTrimPackages() {
         return (Map<String, ArmorTrimPackage>) getPackages(ArmorTrimCosmetic.get());
+    }
+    public Map<String, ShieldPatternPackage> getShieldPatternPackages() {
+        return (Map<String, ShieldPatternPackage>) getPackages(ShieldPatternCosmetic.get());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package dev.lrxh.neptune.feature.cosmetics.menu.armorTrims;
 
-import dev.lrxh.neptune.feature.cosmetics.impl.armortrims.ArmorTrimPackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims.ArmorTrimPackage;
 import dev.lrxh.neptune.utils.ItemBuilder;
 import dev.lrxh.neptune.utils.menu.Button;
 import net.kyori.adventure.key.Key;

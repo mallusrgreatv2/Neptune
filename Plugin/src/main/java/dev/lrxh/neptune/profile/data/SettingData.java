@@ -2,10 +2,12 @@ package dev.lrxh.neptune.profile.data;
 
 import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.feature.cosmetics.KillEffect;
-import dev.lrxh.neptune.feature.cosmetics.impl.armortrims.ArmorTrimCosmetic;
-import dev.lrxh.neptune.feature.cosmetics.impl.armortrims.ArmorTrimPackage;
-import dev.lrxh.neptune.feature.cosmetics.impl.killmessage.KillMessageCosmetic;
-import dev.lrxh.neptune.feature.cosmetics.impl.killmessage.KillMessagePackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims.ArmorTrimCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims.ArmorTrimPackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage.KillMessageCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage.KillMessagePackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.shieldpatterns.ShieldPatternCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.shieldpatterns.ShieldPatternPackage;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,12 +28,14 @@ public class SettingData {
     private boolean menuSound = true;
     private KillMessagePackage killMessagePackage;
     private ArmorTrimPackage armorTrimPackage;
+    private ShieldPatternPackage shieldPatternPackage;
     private List<UUID> followings = new ArrayList<>();
 
     public SettingData(Neptune plugin) {
         this.plugin = plugin;
         this.killMessagePackage = KillMessageCosmetic.get().getDefault();
         this.armorTrimPackage = ArmorTrimCosmetic.get().getDefault();
+        this.shieldPatternPackage = ShieldPatternCosmetic.get().getDefault();
     }
 
     public void increasePing() {
