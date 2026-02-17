@@ -89,7 +89,7 @@ public class CC {
     }
     public Component returnMessage(Player player, String message, TagResolver resolver) {
         String minimessageInput = replaceLegacy(message);
-        Component component = mm.deserialize(minimessageInput, TagResolver.resolver(resolver, PlaceholderUtil.getPlaceholders(player)));
+        Component component = mm.deserialize(minimessageInput, TagResolver.resolver(PlaceholderUtil.getPlaceholders(player), resolver));
         if (Neptune.get().isPlaceholder()) {
             try {
                 return replaceLegacy(PAPIComponents.setPlaceholders(player, component));
