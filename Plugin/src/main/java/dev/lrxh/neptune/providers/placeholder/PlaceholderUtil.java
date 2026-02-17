@@ -32,10 +32,13 @@ public class PlaceholderUtil {
         TagResolver placeholders = TagResolver.resolver(
             Placeholder.unparsed("online", String.valueOf(Bukkit.getServer().getOnlinePlayers().size())),
             Placeholder.unparsed("queued", String.valueOf(QueueService.get().getQueueSize())),
-            Placeholder.unparsed("in-match", String.valueOf(MatchService.get().matches.size())),
-            Placeholder.unparsed("player", player.getName()),
-            Placeholder.unparsed("ping", String.valueOf((PlayerUtil.getPing(player))))
+            Placeholder.unparsed("in-match", String.valueOf(MatchService.get().matches.size()))
         );
+        if (player != null) placeholders = TagResolver.resolver(placeholders,
+                Placeholder.unparsed("player", player.getName()),
+                Placeholder.unparsed("ping", String.valueOf((PlayerUtil.getPing(player))))
+        );
+        else return placeholders;
         Profile profile = API.getProfile(player);
         if (profile == null) return placeholders;
         GlobalStats globalStats = profile.getGameData().getGlobalStats();
@@ -128,9 +131,10 @@ public class PlaceholderUtil {
                             Placeholder.unparsed("opponent-longest-combo", String.valueOf(opponent.getLongestCombo())),
                             Placeholder.unparsed("opponent-hits", String.valueOf(opponent.getHits())),
                             Placeholder.unparsed("opponent-hit-difference", String.valueOf(opponent.getHitsDifference(participant))),
-                            Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints())),
-                            Placeholder.unparsed("opponent-ping", String.valueOf(opponent.getPlayer().getPing()))
-                            );
+                            Placeholder.unparsed("opponent-points", String.valueOf(opponent.getPoints()))
+                    );
+                    if (opponent.getPlayer() != null) placeholders = TagResolver.resolver(placeholders,
+                            Placeholder.unparsed("opponent-ping", String.valueOf(opponent.getPlayer().getPing())));
                 }
                 placeholders = TagResolver.resolver(placeholders,
                     Placeholder.parsed("red-combo", red.getComboMessage()),
@@ -150,6 +154,10 @@ public class PlaceholderUtil {
                     Placeholder.unparsed("blue-points", String.valueOf(blue.getPoints())),
                     Placeholder.unparsed("blue-ping", String.valueOf(blue.getPlayer().getPing()))
                 );
+                if (red.getPlayer() != null) placeholders = TagResolver.resolver(placeholders,
+                        Placeholder.unparsed("red-ping", String.valueOf(red.getPlayer().getPing())));
+                if (blue.getPlayer() != null) placeholders = TagResolver.resolver(placeholders,
+                        Placeholder.unparsed("blue-ping", String.valueOf(blue.getPlayer().getPing())));
             }
             if (match instanceof TeamFightMatch tfm)  {
                 MatchTeam red = tfm.getTeamA();

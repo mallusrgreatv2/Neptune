@@ -7,13 +7,13 @@ import dev.lrxh.neptune.feature.queue.QueueService;
 import dev.lrxh.neptune.profile.impl.Profile;
 import org.bukkit.entity.Player;
 
-import java.util.IdentityHashMap;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ProfileService implements IProfileService {
     private static ProfileService instance;
-    public final IdentityHashMap<UUID, Profile> profiles = new IdentityHashMap<>();
+    public final ConcurrentHashMap<UUID, Profile> profiles = new ConcurrentHashMap<>();
     private final Neptune plugin;
 
     public ProfileService() {
@@ -47,7 +47,7 @@ public class ProfileService implements IProfileService {
     }
 
     public void saveAll() {
-        profiles.values().parallelStream().forEach(Profile::save);
+        profiles.values().forEach(Profile::save);
     }
 
     public Profile getByUUID(UUID playerUUID) {
