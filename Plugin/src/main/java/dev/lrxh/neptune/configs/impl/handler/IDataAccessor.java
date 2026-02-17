@@ -6,6 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,8 +26,12 @@ public interface IDataAccessor {
         return getConfigFile().getConfiguration().getInt(getPath());
     }
 
-    default List<?> getObjectList() {
-        return getConfigFile().getConfiguration().getList(getPath());
+    default <T> List<T> getList(Class<T> type) {
+        return Objects.requireNonNull(getConfigFile().getConfiguration().getList(getPath()))
+                .stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .toList();
     }
 
     default boolean getBoolean() {
