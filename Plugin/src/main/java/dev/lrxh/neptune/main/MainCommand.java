@@ -7,6 +7,8 @@ import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.ConfigService;
 import dev.lrxh.neptune.feature.cosmetics.CosmeticService;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.shieldpatterns.ShieldPatternCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.shieldpatterns.ShieldPatternPackage;
 import dev.lrxh.neptune.feature.hotbar.HotbarService;
 import dev.lrxh.neptune.game.kit.Kit;
 import dev.lrxh.neptune.game.match.Match;
@@ -17,9 +19,20 @@ import dev.lrxh.neptune.providers.database.DatabaseService;
 import dev.lrxh.neptune.utils.CC;
 import dev.lrxh.neptune.utils.GithubUtils;
 
+import dev.lrxh.neptune.utils.PlayerUtil;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.Bukkit;
+import org.bukkit.block.banner.Pattern;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.ShieldMeta;
+
+import java.util.*;
 
 public class MainCommand {
 
@@ -84,5 +97,46 @@ public class MainCommand {
             profile.getGameData().get(kit).setKitLoadout(kit.getItems());
         }
         player.sendMessage(CC.color("&aAll users' kit loadouts have been reset."));
+    }
+
+    @Command(name = "addshield", desc = "", usage = "<name>")
+    @Require("neptune.admin")
+    public void addShield(@Sender Player player, String name) {
+        ItemStack holding = player.getInventory().getItemInMainHand();
+        ItemMeta holdingMeta = holding.getItemMeta();
+        List<Pattern> patterns = null;
+        if (holdingMeta instanceof BannerMeta meta) patterns = meta.getPatterns();
+        if (holdingMeta instanceof ShieldMeta meta) patterns = meta.getPatterns();
+        if (patterns == null || patterns.isEmpty()) {
+            PlayerUtil.sendMessage(player.getUniqueId(), CC.error("No patterns found! (Are you holding a banner?)"));
+            return;
+        }
+        List<Object> objectPatterns = new ArrayList<>();
+        for (Pattern pattern : patterns) {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("DYE", pattern.getColor().name());
+            map.put("PATTERN",
+                    Objects.requireNonNull(
+                            RegistryAccess.registryAccess()
+                                    .getRegistry(RegistryKey.BANNER_PATTERN)
+                                    .getKey(pattern.getPattern())
+                    ).getKey()
+            );
+            objectPatterns.add(map);
+        }
+        YamlConfiguration config = ShieldPatternCosmetic.get().getConfig();
+        name = name.replaceAll(" ", "_").toUpperCase();
+        int highestSlot = 9;
+        for (ShieldPatternPackage shieldPatternPackage : ShieldPatternCosmetic.get().getPackages().values()) {
+            int slot = shieldPatternPackage.getSlot();
+            if (slot > highestSlot) highestSlot = slot;
+        }
+        config.set("SHIELD_PATTERNS." + name + ".DISPLAY_NAME", name);
+        config.set("SHIELD_PATTERNS." + name + ".DESCRIPTION", List.of(name));
+        config.set("SHIELD_PATTERNS." + name + ".MATERIAL", "shield");
+        config.set("SHIELD_PATTERNS." + name + ".SLOT", highestSlot + 1);
+        config.set("SHIELD_PATTERNS." + name + ".PATTERNS", objectPatterns);
+        ShieldPatternCosmetic.get().getConfigFile().save();
+        PlayerUtil.sendMessage(player.getUniqueId(), CC.success("Added the banner"));
     }
 }

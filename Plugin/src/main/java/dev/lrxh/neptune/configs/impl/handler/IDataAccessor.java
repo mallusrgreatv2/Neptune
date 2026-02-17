@@ -25,6 +25,10 @@ public interface IDataAccessor {
         return getConfigFile().getConfiguration().getInt(getPath());
     }
 
+    default List<?> getObjectList() {
+        return getConfigFile().getConfiguration().getList(getPath());
+    }
+
     default boolean getBoolean() {
         return getConfigFile().getConfiguration().getBoolean(getPath());
     }
@@ -52,12 +56,13 @@ public interface IDataAccessor {
         }
     }
 
-    default void setValue(String path, List<String> rawValue, DataType type) {
+    default void setValue(String path, List<?> rawValue, DataType type) {
         switch (type) {
-            case STRING_LIST -> getConfigFile().getConfiguration().set(path, rawValue);
-            case STRING -> getConfigFile().getConfiguration().set(path, rawValue.get(0));
-            case INT -> getConfigFile().getConfiguration().set(path, Integer.parseInt(rawValue.get(0)));
-            case BOOLEAN -> getConfigFile().getConfiguration().set(path, Boolean.parseBoolean(rawValue.get(0)));
+            case LIST -> getConfigFile().getConfiguration().set(path, rawValue);
+            case STRING_LIST -> getConfigFile().getConfiguration().set(path, rawValue.stream().map(String::valueOf).toList());
+            case STRING -> getConfigFile().getConfiguration().set(path, String.valueOf(rawValue.getFirst()));
+            case INT -> getConfigFile().getConfiguration().set(path, Integer.parseInt(String.valueOf(rawValue.getFirst())));
+            case BOOLEAN -> getConfigFile().getConfiguration().set(path, Boolean.parseBoolean(String.valueOf(rawValue.getFirst())));
         }
     }
 

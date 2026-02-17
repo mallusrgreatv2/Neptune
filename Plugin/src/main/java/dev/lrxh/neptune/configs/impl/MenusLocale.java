@@ -442,7 +442,7 @@ public enum MenusLocale implements IDataAccessor {
             "&7Set Max ping you",
             "&7can match against.",
             "",
-            " &7Current Ping-range: &b<ping>",
+            " &7Current Ping-range: &b<max-ping>",
             " ",
             "&a + Left Click to increase",
             "&c - Right Click to decrease"),
@@ -455,6 +455,7 @@ public enum MenusLocale implements IDataAccessor {
             " &7Current Kill Effect: &b<kill-effect>",
             " &7Current Kill Message: &b<kill-message>",
             " &7Current Armor Trim: &b<armor-trim>",
+            " &7Current Shield Pattern: &b<shield-pattern>",
             " ",
             "&aClick to open cosmetics menu"),
     SETTINGS_COSMETICS_SLOT("SETTINGS.SETTINGS.COSMETICS.SLOT", DataType.INT, "15"),
@@ -551,6 +552,32 @@ public enum MenusLocale implements IDataAccessor {
             " ",
             "<description>",
             " ",
+            "&cNo permission"),
+    SHIELD_PATTERNS_TITLE("SETTINGS.SHIELD-PATTERNS.TITLE", DataType.STRING, "&7Shield Patterns"),
+    SHIELD_PATTERNS_SIZE("SETTINGS.SHIELD-PATTERNS.SIZE", DataType.INT, "27"),
+    SHIELD_PATTERNS_FILTER("SETTINGS.SHIELD-PATTERNS.FILTER-TYPE", "FILL, BORDER, NONE", DataType.STRING, "FILL"),
+    SHIELD_PATTERNS_SLOT("SETTINGS.COSMETICS.SHIELD-PATTERNS.SLOT", DataType.INT, "13"),
+    SHIELD_PATTERNS_NAME("SETTINGS.COSMETICS.SHIELD-PATTERNS.NAME", DataType.STRING, "&bShield Patterns"),
+    SHIELD_PATTERNS_MATERIAL("SETTINGS.COSMETICS.SHIELD-PATTERNS.MATERIAL", DataType.STRING, "SHIELD"),
+    SHIELD_PATTERNS_LORE("SETTINGS.COSMETICS.SHIELD-PATTERNS.LORE", DataType.STRING_LIST,
+            "&7View all available shield pattern", " ", "&aClick to open"),
+    SHIELD_PATTERNS_NAME_SELECTED("SETTINGS.SHIELD-PATTERNS.SELECTED.NAME", DataType.STRING,
+            "<display-name> &7&o(Selected)"),
+    SHIELD_PATTERNS_NAME_NOT_SELECTED("SETTINGS.SHIELD-PATTERNS.UNSELECTED.NAME", DataType.STRING, "<display-name>"),
+    SHIELD_PATTERNS_SELECTED_LORE("SETTINGS.SHIELD-PATTERNS.SELECTED.LORE", DataType.STRING_LIST,
+            " ",
+            "<description> ",
+            " ",
+            "&eCurrently Selected"),
+    SHIELD_PATTERNS_UNSELECTED_LORE("SETTINGS.SHIELD-PATTERNS.UNSELECTED.LORE", DataType.STRING_LIST,
+            " ",
+            "<description> ",
+            " ",
+            "&aClick to select"),
+    SHIELD_PATTERNS_NO_PERMISSION_LORE("SETTINGS.SHIELD-PATTERNS.NO-PERMISSION.LORE", DataType.STRING_LIST,
+            " ",
+            "<description> ",
+            " ",
             "&cNo permission");
 
     private final String path;
@@ -595,6 +622,12 @@ public enum MenusLocale implements IDataAccessor {
                                 .replaceAll("<bestStreak>", "<best-win-streak>")
                                 .replaceAll("<win_streak_best>", "<best-win-streak>")
                                 .replaceAll("<kill_death_ratio>", "<kdr>")
+                ).toList()
+        );
+        SETTINGS_PING_RANGE_LORE.set(
+                SETTINGS_PING_RANGE_LORE.getStringList().stream().map(str ->
+                        str
+                                .replaceAll("<ping>", "<max-ping>")
                 ).toList()
         );
         getConfigFile().save();

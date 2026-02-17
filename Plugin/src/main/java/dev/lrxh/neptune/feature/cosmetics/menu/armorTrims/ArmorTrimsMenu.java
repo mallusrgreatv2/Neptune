@@ -3,7 +3,7 @@ package dev.lrxh.neptune.feature.cosmetics.menu.armorTrims;
 import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.configs.impl.MenusLocale;
 import dev.lrxh.neptune.feature.cosmetics.CosmeticService;
-import dev.lrxh.neptune.feature.cosmetics.impl.armortrims.ArmorTrimPackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims.ArmorTrimPackage;
 import dev.lrxh.neptune.utils.menu.Button;
 import dev.lrxh.neptune.utils.menu.Filter;
 import dev.lrxh.neptune.utils.menu.PaginatedMenu;

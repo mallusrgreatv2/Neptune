@@ -19,6 +19,7 @@ public class ConfigService {
     private ConfigFile cosmeticsConfig;
     private ConfigFile killMessagesConfig;
     private ConfigFile armorTrimsConfig;
+    private ConfigFile shieldPatternsConfig;
     private ConfigFile soundsConfig;
 
     public static ConfigService get() {
@@ -40,7 +41,7 @@ public class ConfigService {
         killMessagesConfig = new ConfigFile("kill-messages");
         armorTrimsConfig = new ConfigFile("armor-trims");
         soundsConfig = new ConfigFile("sounds");
-
+        shieldPatternsConfig = new ConfigFile("shield-patterns");
 
         initialize();
     }

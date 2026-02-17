@@ -22,6 +22,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.ShieldMeta;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.*;
@@ -247,6 +249,14 @@ public class Kit implements IKit {
         }
         player.addPotionEffects(potionEffects);
         ItemUtils.applyArmorTrim(profile);
+        for(ItemStack item : player.getInventory()) {
+            if (item == null) continue;
+            ItemMeta meta = item.getItemMeta();
+            if (meta instanceof ShieldMeta shield) {
+                shield.setPatterns(profile.getSettingData().getShieldPatternPackage().getPatterns());
+                item.setItemMeta(shield);
+            }
+        }
         player.updateInventory();
     }
 

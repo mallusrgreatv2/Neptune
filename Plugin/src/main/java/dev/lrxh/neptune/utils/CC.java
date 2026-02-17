@@ -106,7 +106,18 @@ public class CC {
         String serialized = mm.serialize(message);
         return returnMessage(player, serialized, resolver);
     }
-
+    public Component returnMessage(Component message) {
+        return returnMessage(message, TagResolver.empty());
+    }
+    public Component returnMessage(Component message, TagResolver resolver) {
+        return returnMessage(mm.serialize(message), resolver);
+    }
+    public Component returnMessage(String message) {
+        return returnMessage(message, TagResolver.empty());
+    }
+    public Component returnMessage(String message, TagResolver resolver) {
+        return MiniMessage.miniMessage().deserialize(replaceLegacy(message), resolver);
+    }
     public List<Component> getComponentsArray(Player player, List<String> lines)  {
         List<Component> components = new ArrayList<>();
         for (String string : lines) {

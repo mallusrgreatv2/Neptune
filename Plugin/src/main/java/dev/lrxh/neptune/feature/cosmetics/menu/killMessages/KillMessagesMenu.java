@@ -2,7 +2,7 @@ package dev.lrxh.neptune.feature.cosmetics.menu.killMessages;
 
 import dev.lrxh.neptune.configs.impl.MenusLocale;
 import dev.lrxh.neptune.feature.cosmetics.CosmeticService;
-import dev.lrxh.neptune.feature.cosmetics.impl.killmessage.KillMessagePackage;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage.KillMessagePackage;
 import dev.lrxh.neptune.utils.menu.Button;
 import dev.lrxh.neptune.utils.menu.Filter;
 import dev.lrxh.neptune.utils.menu.Menu;

@@ -17,6 +17,7 @@ import dev.lrxh.neptune.game.match.impl.team.TeamFightMatch;
 import dev.lrxh.neptune.profile.data.GlobalStats;
 import dev.lrxh.neptune.profile.data.KitData;
 import dev.lrxh.neptune.profile.data.ProfileState;
+import dev.lrxh.neptune.profile.data.SettingData;
 import dev.lrxh.neptune.profile.impl.Profile;
 import dev.lrxh.neptune.utils.PlayerUtil;
 import lombok.experimental.UtilityClass;
@@ -42,7 +43,7 @@ public class PlaceholderUtil {
         Party party = profile.getGameData().getParty();
         Match match = profile.getGameData().getMatch();
         QueueEntry queue = QueueService.get().get(profile.getPlayerUUID());
-        placeholders = TagResolver.resolver(placeholders,
+        placeholders = TagResolver.resolver(placeholders, getSettingsResolvers(profile),
             Placeholder.parsed("division", globalStats.getDivision().getDisplayName()),
             Placeholder.parsed("kill-effect", profile.getSettingData().getKillEffect().getDisplayName()),
             Placeholder.parsed("kill-message", profile.getSettingData().getKillMessagePackage().getDisplayName()),
@@ -196,5 +197,14 @@ public class PlaceholderUtil {
             }
         }
         return placeholders;
+    }
+    public TagResolver getSettingsResolvers(Profile profile) {
+        SettingData settings = profile.getSettingData();
+        return TagResolver.resolver(Placeholder.unparsed("max-ping", String.valueOf(settings.getMaxPing())),
+                Placeholder.parsed("kill-effect", settings.getKillEffect().getDisplayName()),
+                Placeholder.parsed("kill-message", settings.getKillMessagePackage().getDisplayName()),
+                Placeholder.parsed("armor-trim", settings.getArmorTrimPackage().getDisplayName()),
+                Placeholder.parsed("shield-pattern", settings.getShieldPatternPackage().getDisplayName())
+        );
     }
 }

@@ -6,8 +6,9 @@ import dev.lrxh.neptune.API;
 import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.configs.impl.MessagesLocale;
 import dev.lrxh.neptune.feature.cosmetics.KillEffect;
-import dev.lrxh.neptune.feature.cosmetics.impl.armortrims.ArmorTrimCosmetic;
-import dev.lrxh.neptune.feature.cosmetics.impl.killmessage.KillMessageCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims.ArmorTrimCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage.KillMessageCosmetic;
+import dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.shieldpatterns.ShieldPatternCosmetic;
 import dev.lrxh.neptune.feature.divisions.DivisionService;
 import dev.lrxh.neptune.feature.hotbar.HotbarService;
 import dev.lrxh.neptune.feature.party.Party;
@@ -128,6 +129,7 @@ public class Profile implements IProfile {
                     settingData.setMenuSound(settings.getBoolean("menuSound", false));
                     settingData.setKillMessagePackage(KillMessageCosmetic.get().getOrDefault(settings.getString("deathMessagePackage")));
                     settingData.setArmorTrimPackage(ArmorTrimCosmetic.get().getOrDefault(settings.getString("armorTrimPackage")));
+                    settingData.setShieldPatternPackage(ShieldPatternCosmetic.get().getOrDefault(settings.getString("shieldPatternPackage")));
 
                     DataDocument globalCustomPersistentData = dataDocument.getDataDocument("customPersistentData");
                     if (globalCustomPersistentData != null) {
@@ -196,6 +198,7 @@ public class Profile implements IProfile {
             settingsDoc.put("menuSound", settingData.isMenuSound());
             settingsDoc.put("deathMessagePackage", settingData.getKillMessagePackage().getName());
             settingsDoc.put("armorTrimPackage", settingData.getArmorTrimPackage().getName());
+            settingsDoc.put("shieldPatternPackage", settingData.getShieldPatternPackage().getName());
             dataDocument.put("settings", settingsDoc);
 
             DataDocument globalCustomPersistentData = new DataDocument();

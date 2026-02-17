@@ -1,8 +1,9 @@
-package dev.lrxh.neptune.feature.cosmetics.impl.killmessage;
+package dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage;
 
 import dev.lrxh.api.features.cosmetics.killmessages.IKillMessageCosmetic;
 import dev.lrxh.api.features.cosmetics.killmessages.IKillMessagePackage;
 import dev.lrxh.neptune.configs.ConfigService;
+import dev.lrxh.neptune.feature.cosmetics.CosmeticService;
 import dev.lrxh.neptune.feature.cosmetics.impl.Cosmetic;
 import lombok.Getter;
 import org.bukkit.Material;
@@ -42,6 +43,7 @@ public class KillMessageCosmetic extends Cosmetic implements IKillMessageCosmeti
                 packages.put(packageName, new KillMessagePackage(packageName, displayName, material, description, slot, messages));
             }
         }
+        CosmeticService.get().registerCosmetic(this);
     }
 
     public KillMessagePackage getDefault() {

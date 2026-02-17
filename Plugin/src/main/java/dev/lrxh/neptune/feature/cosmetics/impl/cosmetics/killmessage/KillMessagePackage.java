@@ -1,4 +1,4 @@
-package dev.lrxh.neptune.feature.cosmetics.impl.killmessage;
+package dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.killmessage;
 
 import dev.lrxh.api.features.cosmetics.killmessages.IKillMessagePackage;
 import dev.lrxh.neptune.feature.cosmetics.impl.CosmeticPackage;

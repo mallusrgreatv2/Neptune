@@ -1,4 +1,4 @@
-package dev.lrxh.neptune.feature.cosmetics.impl.armortrims;
+package dev.lrxh.neptune.feature.cosmetics.impl.cosmetics.armortrims;
 
 import dev.lrxh.api.features.cosmetics.armortrims.IArmorTrimPackage;
 import dev.lrxh.neptune.feature.cosmetics.impl.CosmeticPackage;
