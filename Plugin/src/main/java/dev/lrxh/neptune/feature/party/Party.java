@@ -43,13 +43,17 @@ public class Party {
         setupPlayer(leader, false);
     }
 
-    public String getLeaderName() {
+    public Player getLeaderPlayer() {
         Player player = Bukkit.getPlayer(leader);
         if (player == null) {
             users.remove(leader);
-            return "";
+            return null;
         }
-
+        return player;
+    }
+    public String getLeaderName() {
+        Player player = getLeaderPlayer();
+        if (player == null) return "";
         return player.getName();
     }
 
@@ -64,7 +68,7 @@ public class Party {
 
         MessagesLocale.PARTY_INVITATION.send(playerUUID, TagResolver.resolver(
                 TagResolver.resolver("accept", Tag.styling(ClickEvent.runCommand("/party accept " + getLeader()))),
-                Placeholder.unparsed("leader", getLeaderName()),
+                Placeholder.unparsed("leader", getLeaderPlayer().getName()),
                 Placeholder.unparsed("party-max", String.valueOf(getMaxUsers())),
                 Placeholder.unparsed("party-size", String.valueOf(getUsers().size()))
         ));
@@ -95,7 +99,7 @@ public class Party {
     }
 
     public void kick(UUID playerUUID) {
-        broadcast(MessagesLocale.PARTY_KICK, Placeholder.unparsed("player", getLeaderName()));
+        broadcast(MessagesLocale.PARTY_KICK, Placeholder.unparsed("player", getLeaderPlayer().getName()));
         remove(playerUUID);
     }
 
@@ -175,8 +179,8 @@ public class Party {
             setOpen(true);
             for (Profile profile : ProfileService.get().profiles.values()) {
                 MessagesLocale.PARTY_ADVERTISE_MESSAGE.send(profile.getPlayerUUID(), TagResolver.resolver(
-                        Placeholder.parsed("leader", getLeaderName()),
-                        TagResolver.resolver("join", Tag.styling(ClickEvent.runCommand("/party joinad " + getLeaderName())))
+                        Placeholder.parsed("leader", getLeaderPlayer().getName()),
+                        TagResolver.resolver("join", Tag.styling(ClickEvent.runCommand("/party joinad " + getLeaderPlayer().getName())))
                 ));
             }
 

@@ -23,7 +23,6 @@ import dev.lrxh.neptune.game.match.menu.MatchListMenu;
 import dev.lrxh.neptune.game.match.menu.MatchSpectateTeleportMenu;
 import dev.lrxh.neptune.profile.data.ProfileState;
 import dev.lrxh.neptune.profile.impl.Profile;
-import dev.lrxh.neptune.utils.CC;
 import dev.lrxh.neptune.utils.PlayerUtil;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -95,7 +94,7 @@ public enum ItemAction {
             }
             Party party = profile.getGameData().getParty();
             MessagesLocale.PARTY_INFO.send(player.getUniqueId(), TagResolver.resolver(
-                    Placeholder.unparsed("leader", party.getLeaderName()),
+                    Placeholder.unparsed("leader", party.getLeaderPlayer().getName()),
                     Placeholder.unparsed("privacy", party.isOpen() ? MessagesLocale.PARTY_PRIVACY_OPEN.getString() : MessagesLocale.PARTY_PRIVACY_CLOSED.getString()),
                     Placeholder.unparsed("max", String.valueOf(party.getMaxUsers())),
                     Placeholder.unparsed("members", party.getUserNames()),

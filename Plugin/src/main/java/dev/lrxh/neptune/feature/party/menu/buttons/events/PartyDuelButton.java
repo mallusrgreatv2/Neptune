@@ -27,7 +27,7 @@ public class PartyDuelButton extends Button {
 
     @Override
     public void onClick(ClickType type, Player player) {
-        new KitSelectMenu(targetParty.getLeader(), true).open(player);
+        new KitSelectMenu(targetParty.getLeaderPlayer(), true).open(player);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class PartyDuelButton extends Button {
             else lore.add(line);
         }
         return new ItemBuilder(itemStack)
-                .name(MenusLocale.PARTY_DUEL_PARTY_TITLE.getString().replaceAll("<leader>", targetParty.getLeaderName()))
+                .name(MenusLocale.PARTY_DUEL_PARTY_TITLE.getString().replaceAll("<leader>", targetParty.getLeaderPlayer().getName()))
                 .componentLore(ItemUtils.getLore(lore), player)
                 .build();
     }
