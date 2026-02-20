@@ -68,7 +68,7 @@ public class Party {
 
         MessagesLocale.PARTY_INVITATION.send(playerUUID, TagResolver.resolver(
                 TagResolver.resolver("accept", Tag.styling(ClickEvent.runCommand("/party accept " + getLeader()))),
-                Placeholder.unparsed("leader", getLeaderPlayer().getName()),
+                Placeholder.unparsed("leader", getLeaderName()),
                 Placeholder.unparsed("party-max", String.valueOf(getMaxUsers())),
                 Placeholder.unparsed("party-size", String.valueOf(getUsers().size()))
         ));
@@ -99,7 +99,7 @@ public class Party {
     }
 
     public void kick(UUID playerUUID) {
-        broadcast(MessagesLocale.PARTY_KICK, Placeholder.unparsed("player", getLeaderPlayer().getName()));
+        broadcast(MessagesLocale.PARTY_KICK, Placeholder.unparsed("player", getLeaderName()));
         remove(playerUUID);
     }
 
@@ -179,8 +179,8 @@ public class Party {
             setOpen(true);
             for (Profile profile : ProfileService.get().profiles.values()) {
                 MessagesLocale.PARTY_ADVERTISE_MESSAGE.send(profile.getPlayerUUID(), TagResolver.resolver(
-                        Placeholder.parsed("leader", getLeaderPlayer().getName()),
-                        TagResolver.resolver("join", Tag.styling(ClickEvent.runCommand("/party joinad " + getLeaderPlayer().getName())))
+                        Placeholder.parsed("leader", getLeaderName()),
+                        TagResolver.resolver("join", Tag.styling(ClickEvent.runCommand("/party joinad " + getLeaderName())))
                 ));
             }
 

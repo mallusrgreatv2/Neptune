@@ -51,7 +51,7 @@ public class PartyDuelButton extends Button {
             else lore.add(line);
         }
         return new ItemBuilder(itemStack)
-                .name(MenusLocale.PARTY_DUEL_PARTY_TITLE.getString().replaceAll("<leader>", targetParty.getLeaderPlayer().getName()))
+                .name(MenusLocale.PARTY_DUEL_PARTY_TITLE.getString().replaceAll("<leader>", targetParty.getLeaderName()))
                 .componentLore(ItemUtils.getLore(lore), player)
                 .build();
     }
