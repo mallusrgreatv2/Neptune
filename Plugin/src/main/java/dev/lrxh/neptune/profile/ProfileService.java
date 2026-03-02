@@ -5,6 +5,7 @@ import dev.lrxh.api.profile.IProfileService;
 import dev.lrxh.neptune.Neptune;
 import dev.lrxh.neptune.feature.queue.QueueService;
 import dev.lrxh.neptune.profile.impl.Profile;
+import dev.lrxh.neptune.utils.CC;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -28,8 +29,14 @@ public class ProfileService implements IProfileService {
     }
 
     public CompletableFuture<Void> createProfile(Player player) {
-        return Profile.create(player.getName(), player.getUniqueId(), plugin, false)
-                .thenAccept(profile -> profiles.put(player.getUniqueId(), profile));
+        try {
+            return Profile.create(player.getName(), player.getUniqueId(), plugin, false)
+                    .thenAccept(profile -> profiles.put(player.getUniqueId(), profile));
+        } catch (Exception e) {
+            Neptune.get().getLogger().severe("Error occurred while loading profile for player: " + player.getName());
+            player.kick(CC.color("<aqua>[Neptune] <dark_red>An error occurred while loading your profile information! Report to the developers."));
+            throw e;
+        }
     }
 
     public CompletableFuture<Profile> createFakeProfile(UUID uuid) {

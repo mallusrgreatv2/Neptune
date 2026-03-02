@@ -1,5 +1,6 @@
 package dev.lrxh.neptune.utils;
 
+import dev.lrxh.neptune.Neptune;
 import lombok.experimental.UtilityClass;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -18,6 +19,7 @@ public class PotionEffectUtils {
     public PotionEffect deserialize(String data) {
         String[] parts = data.split(":");
         PotionEffectType type = PotionEffectType.getByName(parts[0]);
+        if (type == null) return null;
         int duration = Integer.parseInt(parts[1]);
         int amplifier = Integer.parseInt(parts[2]);
         boolean ambient = Boolean.parseBoolean(parts[3]);
