@@ -220,9 +220,10 @@ public final class Neptune extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (errored) return;
-        stopService(KitService.get(), KitService::save);
-        stopService(ArenaService.get(), ArenaService::save);
+        if (!errored) {
+            stopService(KitService.get(), KitService::save);
+            stopService(ArenaService.get(), ArenaService::save);
+        }
         stopService(MatchService.get(), MatchService::stopAllGames);
         stopService(TaskScheduler.get(), TaskScheduler::stopAllTasks);
         stopService(ProfileService.get(), ProfileService::saveAll);
