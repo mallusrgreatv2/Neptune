@@ -29,14 +29,14 @@ public class ProfileService implements IProfileService {
     }
 
     public CompletableFuture<Void> createProfile(Player player) {
-        try {
-            return Profile.create(player.getName(), player.getUniqueId(), plugin, false)
-                    .thenAccept(profile -> profiles.put(player.getUniqueId(), profile));
-        } catch (Exception e) {
-            Neptune.get().getLogger().severe("Error occurred while loading profile for player: " + player.getName());
-            player.kick(CC.color("<aqua>[Neptune] <dark_red>An error occurred while loading your profile information! Report to the developers."));
-            throw e;
-        }
+        return Profile.create(player.getName(), player.getUniqueId(), plugin, false)
+                .thenAccept(profile -> profiles.put(player.getUniqueId(), profile))
+                .whenComplete((result, throwable) -> {
+                    if (throwable != null) {
+                        Neptune.get().getLogger().severe("Error occurred while loading profile for player: " + player.getName());
+                        player.kick(CC.color("<aqua>[Neptune] <dark_red>An error occurred while loading your profile information! Report to the developers."));
+                    }
+                });
     }
 
     public CompletableFuture<Profile> createFakeProfile(UUID uuid) {
