@@ -38,14 +38,14 @@ public class ArenaService extends IService implements IArenaService {
         FileConfiguration config = ConfigService.get().getArenasConfig().getConfiguration();
         if (config.contains("arenas")) {
             for (String arenaName : getKeys("arenas")) {
-               try {
+                try {
                     Arena arena = loadArena(arenaName);
                     arenas.add(arena);
-               } catch (Exception e) {
-                   Neptune.get().getLogger().severe("Error occurred while loading an arena with key: " + arenaName);
-                   Neptune.get().setErrored();
-                   throw e;
-               }
+                } catch (Exception e) {
+                    Neptune.get().getLogger().severe("Error occurred while loading an arena with key: " + arenaName);
+                    Neptune.get().setErrored();
+                    throw e;
+                }
             }
         }
     }
